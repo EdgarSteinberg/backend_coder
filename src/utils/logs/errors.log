@@ -1,0 +1,47 @@
+{"level":"warn","message":"Fri Jun 14 2024 GET en /login"}
+[31merror[39m: Error al crear mensaje: User or message not provided
+[31merror[39m: Error al iniciar sesion: Error logging in user
+[31merror[39m: Error al registrase Error registering user: one or more fields are invalid
+[31merror[39m: Error al obtener el ticket con ID : El ticket con ID : 665ddc572afaeaa76371f4c no existe
+[31merror[39m: Error al obtener el ticket El ticket con ID : 665ddc572afaeaa76371f4c no existe
+[31merror[39m: Error al crear el ticket}: Usuario con id 665a70cea30d08937ccec99 no existe
+[31merror[39m: Error al crear el ticket}: Cannot read properties of null (reading 'email')
+[31merror[39m: Error en /loggerTest: devLogger.warn is not a function
+[31merror[39m: Error en /loggerTest: devLogger.warning is not a function
+[31merror[39m: Error en /loggerTest: devLogger.warning is not a function
+[31merror[39m: Error en /loggerTest: devLogger.fatal is not a function
+[31merror[39m: Error en /loggerTest: prodLogger.warn is not a function
+[31merror[39m: Este es un mensaje de error desde el endpoint /loggerTest
+[31mfatal[39m: Este es un mensaje fatal desde el endpoint /loggerTest
+[31merror[39m: Error al buscar el producto con ID:66549cec49514df1d37c773b} Error al buscar el producto
+[31merror[39m: Error al crear el producto Error al crear el producto: Uno o más campos requeridos están vacíos
+[31merror[39m: Error al obtener el ticket ID: 665ddc572afaeaa76371f4c El ticket con ID : 665ddc572afaeaa76371f4c no existe
+[31merror[39m: Error al buscar el carrito con ID: 8 Error al buscar el producto
+[31merror[39m: Error al añadir producto al carrito con ID: 66153363d7cc43c7dc436a1 Error al actualizar el carrito
+[31merror[39m: Error al eliminar producto del carrito con ID: 66671e0a7d940a189073ac77 Error al eliminar el producto del carrito
+[31merror[39m: Error al eliminar todos los productos del carrito con ID: 6665178aef047b8fd25c71cf Error al eliminar todos los productos del carrito
+[31merror[39m: Error al obtener el ticket ID: 665ddc572afaeaa76371f4c El ticket con ID : 665ddc572afaeaa76371f4c no existe
+[31merror[39m: Error al crear el ticket}: Cannot read properties of null (reading 'email')
+[31merror[39m: Error al añadir producto al carrito con ID: 66153363d7cc43c7dc436a1 Error al actualizar el carrito
+[31merror[39m: Error al crear el ticket}: Error al crear ticket
+[31merror[39m: Error al registrase Error registering user: one or more fields are invalid
+[31merror[39m: Error al buscar el producto con ID:66549cec49514df1d37c773b req is not defined
+[31merror[39m: Error al buscar los productos req is not defined
+[31merror[39m: Error al buscar los productos req is not defined
+[31merror[39m: Error al buscar el producto con ID:66549cec49514df1d37c773b Error al buscar el producto
+[31merror[39m: Error al buscar el producto con ID:661050a70a7c84b27f8dcc2 Error al buscar el producto
+[31merror[39m: Error al crear el producto Error al crear el producto
+[31merror[39m: Error al crear el producto logger.warn is not a function
+[31merror[39m: Error al crear el producto Error al crear el producto: Uno o más campos requeridos están vacíos
+[31merror[39m: Error al crear el producto Error al crear el producto: Uno o más campos requeridos están vacíos
+[31merror[39m: Error al modificar el producto con ID: 661050a70a7c84b27f8dcc2 pid is not defined
+[31merror[39m: Error al modificar el producto con ID: 661050a70 Error al actualizar el producto
+[31merror[39m: Error al eliminar el productos con ID:66549cec49514df1d37c773bError al eliminar el producto
+[31merror[39m: Error al eliminar el productos con ID:66549cec49514df1d37c773bError al eliminar el producto
+[31merror[39m: Este es un mensaje de error desde el endpoint /loggerTest
+[31mfatal[39m: Este es un mensaje fatal desde el endpoint /loggerTest
+[31merror[39m: Error al buscar el carrito con ID: 2 Error al buscar el producto
+[31merror[39m: Error al buscar el carrito con ID: 6665178aef047b8fd25c71cd Error al buscar el producto
+[31merror[39m: Error al buscar el carrito con ID: 666af54dbfa9e94bc83d5a1c Error al buscar el producto
+[31merror[39m: Error al crearr el carrito  Error al crear el carrito
+[31merror[39m: Error al crearr el carrito  Error al crear el carrito

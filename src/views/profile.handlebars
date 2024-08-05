@@ -1,0 +1,17 @@
+<div class="container">
+    <h1>Tu sesión está activa. {{user.first_name}} {{user.username}}</h1>
+    <hr>
+    <div class="products">
+        <p><b>Nombre:</b>{{user.first_name}}{{user.name}}</p>
+        <p><b>Apellido:</b>{{user.last_name}}</p>
+        <p><b>Email:</b>{{user.email}}</p>
+        <p><b>Edad:</b>{{user.age}}</p>
+        <p><b>Usuario:</b> {{user.username}}</p>
+        <form method="post" action="/api/users/logout">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+
+    </div>
+
+
+</div>

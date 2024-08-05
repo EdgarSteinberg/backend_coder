@@ -1,0 +1,36 @@
+<div class="containerHome">
+    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">chat</a>
+    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
+    <a class="logout-link" href="/admUsers">Roles</a>
+    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Session</button>
+    </form>
+</div>
+<hr>
+<div >
+<h1>Upload Documents</h1>
+<form class="box" id="uploadForm" action="/api/users/{{user._id}}/documents" method="post"
+    enctype="multipart/form-data">
+    <label for="docs">Upload Documents:</label>
+    <input type="file" name="docs" id="docs" multiple />
+    <br>
+    <span id="error-message" class="error-message">You must upload at least 3 files.</span>
+    <br>
+       <p id="info-message" class="info-message">
+        To upgrade to premium, you need to upload the following documents:
+        <ul>
+            <li>Identification</li>
+            <li>Proof of Address</li>
+            <li>Proof of Bank Statement</li>
+        </ul>
+        After uploading, please log in again to complete the process.
+    </p>
+    <button class="btnChat" type="submit">Subir</button>
+</form>
+
+<script src="/js/fileUploadHandler.js"></script>

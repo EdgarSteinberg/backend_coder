@@ -1,0 +1,425 @@
+{{!-- <h1>Carrito de Compras</h1>
+<div class="container">
+    {{#each cart.products}}
+    <div class="products">
+        <p>Producto: {{this.product.title}}</p>
+        <p>Descripción: {{this.product.description}}</p>
+        <p>Precio: {{this.product.price}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+        <button class="delete" type="button" data-productid="{{this.product._id}}" data-cartid="{{../cart._id}}"
+            onclick="eliminarProducto(event)">Eliminar</button>
+    </div>
+    {{/each}}
+</div>
+<div class="box">
+    <button class="delete" data-cartid="{{cart._id}}" onclick="vaciarCarrito(event)">Vaciar Carrito</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Asocia los manejadores de eventos para eliminar productos y vaciar carrito
+        document.querySelectorAll('.delete').forEach(button => {
+            if (button.getAttribute('data-productid')) {
+                button.addEventListener('click', eliminarProducto);
+            } else {
+                button.addEventListener('click', vaciarCarrito);
+            }
+        });
+    });
+
+    function eliminarProducto(event) {
+        // Usa el parámetro 'event' para acceder al botón que disparó el evento
+        const productId = event.target.getAttribute('data-productid');
+        const cartId = event.target.getAttribute('data-cartid');
+        console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId);
+
+        if (!cartId || !productId) {
+            console.error("Cart ID o Product ID no proporcionado");
+            return;
+        }
+
+        fetch(`/api/cart/${cartId}/products/${productId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Producto eliminado correctamente");
+                    // Opcional: Recargar la página o actualizar la interfaz de usuario
+                    location.reload();
+                } else {
+                    console.error("Error al eliminar el producto");
+                }
+            })
+            .catch(error => {
+                console.error("Error al eliminar el producto:", error);
+            });
+    }
+
+    function vaciarCarrito(event) {
+        // Usa el parámetro 'event' para acceder al botón que disparó el evento
+        const cartId = event.target.getAttribute('data-cartid');
+        console.log("CARRITO ID: ", cartId);
+
+        if (!cartId) {
+            console.error("Cart ID no proporcionado");
+            return;
+        }
+
+        fetch(`/api/cart/${cartId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Carrito vacío correctamente");
+                    // Opcional: Recargar la página o actualizar la interfaz de usuario
+                    location.reload();
+                } else {
+                    console.error("Error al vaciar el carrito");
+                }
+            })
+            .catch(error => {
+                console.error("Error al vaciar el carrito:", error);
+            });
+    }
+</script> --}}
+
+{{!-- <h1>Carrito de Compras</h1>
+<div class="container">
+    {{#each cart.products}}
+    <div class="products">
+        <p>Producto: {{this.product.title}}</p>
+        <p>Descripción: {{this.product.description}}</p>
+        <p>Precio: {{this.product.price}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+        <button class="delete" type="button" data-productid="{{this.product._id}}"
+            data-cartid="{{../cart._id}}">Eliminar</button>
+    </div>
+    {{/each}}
+</div>
+<div class="box">
+    <button class="delete" data-cartid="{{cart._id}}">Vaciar Carrito</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Asocia los manejadores de eventos para eliminar productos y vaciar carrito
+        document.querySelectorAll('.delete').forEach(button => {
+            // Comprueba si el botón tiene un atributo 'data-productid'
+            if (button.getAttribute('data-productid')) {
+                button.addEventListener('click', eliminarProducto);
+            } else {
+                button.addEventListener('click', vaciarCarrito);
+            }
+        });
+    });
+
+    async function eliminarProducto(event) {
+        const productId = event.target.getAttribute('data-productid');
+        const cartId = event.target.getAttribute('data-cartid');
+        console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId);
+
+        if (!cartId || !productId) {
+            console.error("Cart ID o Product ID no proporcionado");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                console.log("Producto eliminado correctamente");
+                location.reload();
+            } else {
+                console.error("Error al eliminar el producto");
+            }
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+        }
+    }
+
+    async function vaciarCarrito(event) {
+        const cartId = event.target.getAttribute('data-cartid');
+        console.log("CARRITO ID: ", cartId);
+
+        if (!cartId) {
+            console.error("Cart ID no proporcionado");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/cart/${cartId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                console.log("Carrito vacío correctamente");
+                location.reload();
+            } else {
+                console.error("Error al vaciar el carrito");
+            }
+        } catch (error) {
+            console.error("Error al vaciar el carrito:", error);
+        }
+    }
+</script> --}}
+
+
+{{!-- <h1>Carrito de Compras</h1>
+<div class="container">
+    {{#each cart.products}}
+    <div class="products">
+        <p>Producto: {{this.product.title}}</p>
+        <p>Descripción: {{this.product.description}}</p>
+        <p>Precio: {{this.product.price}}</p>
+        <p>Cantidad: </p>
+        <input type="number" class="quantity-input" data-productid="{{this.product._id}}" value="{{this.quantity}}"
+            min="1">
+        <button class="update-quantity success" type="button" data-productid="{{this.product._id}}"
+            data-cartid="{{../cart._id}}">Actualizar Cantidad</button>
+        <button class="delete" type="button" data-productid="{{this.product._id}}"
+            data-cartid="{{../cart._id}}">Eliminar</button>
+    </div>
+    {{/each}}
+</div>
+<div class="box">
+    <button class="delete" data-cartid="{{cart._id}}">Vaciar Carrito</button>
+</div>
+<div>
+    <a class="box" href="/"><button class="success">Volver al inicio</button></a>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Función para eliminar producto
+        document.querySelectorAll('.delete').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-productid');
+                const cartId = event.target.getAttribute('data-cartid');
+                console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId);
+
+                if (!cartId || !productId) {
+                    console.error("Cart ID o Product ID no proporcionado");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (response.ok) {
+                        console.log("Producto eliminado correctamente");
+                        location.reload();
+                    } else {
+                        console.error("Error al eliminar el producto");
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar el producto:", error);
+                }
+            });
+        });
+
+        // Función para vaciar carrito
+        document.querySelectorAll('.delete').forEach(button => {
+            if (button.hasAttribute('data-cartid')) {
+                button.addEventListener('click', async (event) => {
+                    const cartId = event.target.getAttribute('data-cartid');
+                    console.log("CARRITO ID: ", cartId);
+
+                    if (!cartId) {
+                        console.error("Cart ID no proporcionado");
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(`/api/cart/${cartId}`, {
+                            method: 'DELETE',
+                        });
+
+                        if (response.ok) {
+                            console.log("Carrito vacío correctamente");
+                            location.reload();
+                        } else {
+                            console.error("Error al vaciar el carrito");
+                        }
+                    } catch (error) {
+                        console.error("Error al vaciar el carrito:", error);
+                    }
+                });
+            }
+        });
+
+        // Función para actualizar la cantidad
+        document.querySelectorAll('.update-quantity').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-productid');
+                const cartId = event.target.getAttribute('data-cartid');
+                const quantityInput = document.querySelector(`input[data-productid="${productId}"]`);
+                const quantity = quantityInput.value;
+
+                console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId, "CANTIDAD: ", quantity);
+
+                if (!cartId || !productId || !quantity) {
+                    console.error("Cart ID, Product ID o Quantity no proporcionado");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ quantity }),
+                    });
+
+                    if (response.ok) {
+                        console.log("Cantidad actualizada correctamente");
+                        location.reload();
+                    } else {
+                        console.error("Error al actualizar la cantidad");
+                    }
+                } catch (error) {
+                    console.error("Error al actualizar la cantidad:", error);
+                }
+            });
+        });
+
+    });
+</script> --}}
+
+<div class="containerHome">
+    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/carts/{{cart._id}}">Carrito</a>
+    <a class="logout-link" href="/chat">chat</a>
+    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
+    <a class="logout-link" href="/admUsers">Roles</a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Session</button>
+    </form>
+</div>
+<hr>
+<div >
+<h1>Carrito de Compras</h1>
+<div class="container">
+    {{#each cart.products}}
+    <div class="products">
+        <p>Producto: {{this.product.title}}</p>
+        <p>Descripción: {{this.product.description}}</p>
+        <p>Precio: {{this.product.price}}</p>
+        <p>Cantidad: </p>
+        <input type="number" class="quantity-input" data-productid="{{this.product._id}}" value="{{this.quantity}}"
+            min="1">
+        <button class="update-quantity success" type="button" data-productid="{{this.product._id}}"
+            data-cartid="{{../cart._id}}">Actualizar Cantidad</button>
+        <button id="delete-product-{{this.product._id}}" class="delete" type="button"
+            data-productid="{{this.product._id}}" data-cartid="{{../cart._id}}">Eliminar</button>
+    </div>
+    {{/each}}
+</div>
+<div class="box">
+    <button id="delete-cart-{{cart._id}}" class="delete" data-cartid="{{cart._id}}">Vaciar Carrito</button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Función para eliminar producto
+        document.querySelectorAll('[id^="delete-product-"]').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-productid');
+                const cartId = event.target.getAttribute('data-cartid');
+                console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId);
+
+                if (!cartId || !productId) {
+                    console.error("Cart ID o Product ID no proporcionado");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (response.ok) {
+                        console.log("Producto eliminado correctamente");
+                        location.reload();
+                    } else {
+                        console.error("Error al eliminar el producto");
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar el producto:", error);
+                }
+            });
+        });
+
+        // Función para vaciar carrito
+        document.querySelectorAll('[id^="delete-cart-"]').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const cartId = event.target.getAttribute('data-cartid');
+                console.log("CARRITO ID: ", cartId);
+
+                if (!cartId) {
+                    console.error("Cart ID no proporcionado");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/cart/${cartId}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (response.ok) {
+                        console.log("Carrito vacío correctamente");
+                        location.reload();
+                    } else {
+                        console.error("Error al vaciar el carrito");
+                    }
+                } catch (error) {
+                    console.error("Error al vaciar el carrito:", error);
+                }
+            });
+        });
+
+        // Función para actualizar la cantidad
+        document.querySelectorAll('.update-quantity').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-productid');
+                const cartId = event.target.getAttribute('data-cartid');
+                const quantityInput = document.querySelector(`input[data-productid="${productId}"]`);
+                const quantity = quantityInput.value;
+
+                console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId, "CANTIDAD: ", quantity);
+
+                if (!cartId || !productId || !quantity) {
+                    console.error("Cart ID, Product ID o Quantity no proporcionado");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ quantity }),
+                    });
+
+                    if (response.ok) {
+                        console.log("Cantidad actualizada correctamente");
+                        location.reload();
+                    } else {
+                        console.error("Error al actualizar la cantidad");
+                    }
+                } catch (error) {
+                    console.error("Error al actualizar la cantidad:", error);
+                }
+            });
+        });
+
+    });
+</script>

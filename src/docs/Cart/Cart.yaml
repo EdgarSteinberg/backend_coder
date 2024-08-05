@@ -1,0 +1,348 @@
+openapi: 3.0.1
+info:
+  title: "Documentación API del Carrito"
+  description: "Esta documentación cubre las rutas de la API del carrito de compras"
+  version: "1.0.0"
+paths:
+  /api/cart:
+    get:
+      tags:
+        - "Carts"
+      summary: "Obtener todos los carritos"
+      operationId: "getCartList"
+      responses:
+        '200':
+          description: "Lista de carritos"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+    post:
+      tags:
+        - "Carts"
+      summary: "Crear un nuevo carrito"
+      operationId: "createCart"
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: "ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "666af778fcaff0499dad9b68"
+      responses:
+        '201':
+          description: "Carrito creado"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  payload:
+                    type: string
+                    example: "666af778fcaff0499dad9b68"
+  /api/cart/{cid}:
+    get:
+      tags:
+        - "Carts"
+      summary: "Obtener un carrito por ID"
+      operationId: "getCartById"
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+      responses:
+        '200':
+          description: "Carrito encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    put:
+      tags:
+        - "Carts"
+      summary: "Actualizar un carrito"
+      operationId: "updateCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+      requestBody:
+        description: "Producto y cantidad a actualizar"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: string
+                  example: "6685978cbc0ebf26958bf3e5"
+                quantity:
+                  type: integer
+                  example: 5
+      responses:
+        '200':
+          description: "Carrito actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    delete:
+      tags:
+        - "Carts"
+      summary: "Eliminar todos los productos de un carrito"
+      operationId: "deleteProductsFromCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+      requestBody:
+        description: "ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "6672e23850df4129d75fa7a9"
+      responses:
+        '200':
+          description: "Carrito actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+  /api/cart/{cid}/products/{pid}:
+    post:
+      tags:
+        - "Carts"
+      summary: "Agregar un producto al carrito"
+      operationId: "addProductToCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      requestBody:
+        description: "ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "666af778fcaff0499dad9b68"
+      responses:
+        '200':
+          description: "Producto agregado al carrito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    delete:
+      tags:
+        - "Carts"
+      summary: "Eliminar un producto del carrito"
+      operationId: "deleteProductFromCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      requestBody:
+        description: "ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "666af778fcaff0499dad9b68"
+      responses:
+        '200':
+          description: "Producto eliminado del carrito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+    put:
+      tags:
+        - "Carts"
+      summary: "Actualizar la cantidad de un producto en el carrito"
+      operationId: "updateProductQuantityInCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: "ID del producto"
+      requestBody:
+        description: "Nueva cantidad del producto e ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "666af778fcaff0499dad9b68"
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: "Cantidad de producto actualizada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+  /api/cart/{cid}/purchase:
+    post:
+      tags:
+        - "Carts"
+      summary: "Realizar una compra con el carrito"
+      operationId: "purchaseCart"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: "ID del carrito"
+      requestBody:
+        description: "Información de la compra e ID del usuario"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "666af778fcaff0499dad9b68"
+                purchaser:
+                  type: string
+      responses:
+        '200':
+          description: "Compra realizada con éxito"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  message:
+                    type: string
+                    example: "¡Su compra ha sido exitosa!"
+                  payload:
+                    type: object
+                    properties:
+                      validProducts:
+                        type: array
+                        items:
+                          type: string
+                      failedProducts:
+                        type: array
+                        items:
+                          type: string
+                      cart:
+                        $ref: "#/components/schemas/Cart"
+                      ticket:
+                        $ref: "#/components/schemas/Ticket"
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                format: ObjectId
+                example: "66848d037cca9a0faa170e14"
+              quantity:
+                type: integer
+                example: 1
+        user:
+          type: string
+          format: ObjectId
+          example: "60c72b2f5f1b2c001c8e4b85"
+
+securityDefinitions:
+  bearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+
+# aca termino el codigo 1 y empieza el codigo pruebas
+# aca termino el codigo 1 y empieza el codigo 
+# aca termino el codigo 1 y empieza el codigo
+

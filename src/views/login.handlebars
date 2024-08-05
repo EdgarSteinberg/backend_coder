@@ -1,0 +1,41 @@
+<div>
+    <h1>LOGIN</h1>
+
+    <hr>
+    <span class="box">
+        <a href="/api/gitHub">
+            <button class="btnChat">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo"
+                    style="height: 20px; vertical-align: middle; margin-right: 5px; background-color: transparent; border-radius: 50%;">
+                GitHub
+            </button>
+        </a>
+    </span>
+    <br>
+    <form class="box" method="post" action="/api/users/login">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+
+        <button class="btnChat" type="submit">Login</button>
+    </form>
+
+    <span class="box">
+        <a href="/register">
+            <button class="btnChat">Register</button>
+        </a>
+    </span>
+
+    <p class="box">Olvidaste tu contraseña?</p>
+    <a class="box" href="/recover-password">
+        click aqui
+    </a>
+</div>
+
+{{#if failLogin}}
+<script>
+    alert('Login Failed!')
+</script>
+{{/if}}

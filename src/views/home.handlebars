@@ -1,0 +1,63 @@
+<div class="containerHome">
+    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">Chat</a>
+    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
+    <a class="logout-link" href="/admUsers">Roles</a>
+    <a class="logout-link" href="/mockingproducts">Faker</a>
+    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Session</button>
+    </form>
+</div>
+<hr>
+<div >
+    <div class="containerData">
+        <p><b>Nombre: </b>{{user.first_name}}{{user.name}}</p>
+        <p><b>Usuario:</b> {{user.username}}</p>
+        <p><b>Apellido: </b>{{user.last_name}}</p>
+        <p><b>Email: </b>{{user.email}}</p>
+        <p><b>Edad: </b>{{user.age}}</p>
+        <p><b>ID del Usuario: </b>{{user._id}}</p>
+        <p><b>ID del Carrito: </b>{{cart._id}}</p>
+      
+        <a href="/carts/{{cart._id}}">
+        <button class="successCart"> <i class="fas fa-shopping-cart"></i> Carrito</button></a>
+
+
+    </div>
+</div>
+
+<div class="container">
+    {{#each products}}
+    <div class="products">
+        <h2> {{this.title}}</h2>
+        <hr>
+        <p>Precio: ${{this.price}}</p>
+        <div class="img1">
+            {{#each this.thumbnail}}
+            <img class="img1" src="/img/{{this}}" alt="{{../this.description}}">
+            {{/each}}
+        </div>
+        <a href="/products/{{this._id}}" class="detail-link">
+            <button class="btnP" type="button" data-userid="{{user._id}}">Ver Detalles</button>
+        </a>
+    </div>
+
+    {{/each}}
+
+</div>
+<div>
+    {{#if hasPrevPage}}
+    <a href="{{this.prevLink}}">
+        << Anterior</a>
+            {{/if}}
+</div>
+<br>
+<div>
+    {{#if hasNextPage}}
+    <a href="{{this.nextLink}}">Siguiente >></a>
+    {{/if}}
+</div>

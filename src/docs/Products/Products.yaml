@@ -1,0 +1,192 @@
+openapi: 3.0.1
+info:
+  title: Documentacion sistema Adopme
+  description: Esta documentacion cubre toda la API habilitada para Adopme
+  version: "1.0.0"
+paths:
+  /api/products:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '201':
+          description: Producto creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+  /api/products/{pid}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+    put:
+      summary: Actualizar producto por ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Producto actualizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+    delete:
+      summary: Eliminar producto por ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto eliminado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Nombre del producto"
+        description:
+          type: string
+          example: "Descripción del producto"
+        code:
+          type: string
+          example: "abc123"
+        price:
+          type: number
+          example: 100
+        status:
+          type: boolean
+          example: true
+        stock:
+          type: number
+          example: 50
+        category:
+          type: string
+          example: "Categoria del producto"
+        thumbnail:
+          type: array
+          items:
+            type: string
+          example: ["thumbnail1.png", "thumbnail2.png"]
+        owner:
+          type: string
+          example: "admin"
+    ProductInput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Nombre del producto"
+        description:
+          type: string
+          example: "Descripción del producto"
+        code:
+          type: string
+          example: "abc123"
+        price:
+          type: number
+          example: 1000
+        status:
+          type: boolean
+          example: true
+        stock:
+          type: number
+          example: 500
+        category:
+          type: string
+          example: "Categoria del producto"

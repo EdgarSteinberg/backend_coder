@@ -1,0 +1,38 @@
+<div class="containerHome">
+    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">chat</a>
+    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
+    <a class="logout-link" href="/admUsers">Roles</a>
+    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Session</button>
+    </form>
+</div>
+<hr>
+<div >
+<div class="containerChat">
+    <h2>Enviar Mensaje</h2>
+    <form id="mensajeForm">
+        <label for="user">Ingrese su Email</label><br>
+        <input class="inputChat" type="text" id="user" name="user"><br>
+    
+        <label for="message">Mensaje</label><br>
+        <textarea class="textareaChat" id="message" name="message" cols="50" rows="4"></textarea><br>
+
+        <button class="btnChat" type="submit">Enviar Mensaje</button>
+    </form>
+
+</div>
+<hr>
+
+<div id="messagesLogs">
+    {{#each chats}}
+    <div>
+        <h2>{{this.user}}</h2>
+        <p>{{this.message}}</p>
+    </div>
+     {{/each}}
+</div>

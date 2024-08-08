@@ -1,0 +1,77 @@
+<div class="containerHome">
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">Contáctanos</a>
+    <a class="logout-link" href="/uploadDocuments">Subir documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Agregar productos</a>
+    <a class="logout-link" href="/admUsers">Gestión de roles</a>
+    <a class="logout-link" href="/mockingproducts">Faker</a>
+    <a class="logout-link" href="/purcharser">Order</a>
+    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
+    </form>
+</div>
+<hr>
+<div class="containerData">
+    <p><b>Nombre: </b>{{users.first_name}}{{user.name}}</p>
+    <p><b>Usuario:</b> {{users.username}}</p>
+    <p><b>Apellido: </b>{{users.last_name}}</p>
+    <p><b>Email: </b>{{users.email}}</p>
+    <p><b>Edad: </b>{{users.age}}</p>
+    <p><b>ID del Usuario: </b>{{users._id}}</p>
+    <p><b>ID del Carrito: </b>{{cart._id}}</p>
+    <a href="/carts/{{cart._id}}">
+        <button class="successCart"> <i class="fas fa-shopping-cart"></i> Carrito</button></a>
+</div>
+
+<div class="box">
+    <h1>Carrito de Compras</h1>
+    <div>
+        <div class="box">
+            <table class="border">
+                <thead>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    </tr>
+                </thead>
+
+                {{#each products}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>${{this.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>${{this.total}}</td>
+
+                </tr>
+                {{/each}}
+
+            </table>
+            <br>
+            <h3>Total de la compra:</h3>
+            <p>${{totalPrice}}</p> 
+
+            <!-- Formulario para finalizar la compra -->
+            <form method="post" action="/api/cart/{{cart._id}}/purchase">
+                <input type="hidden" name="purchaser" value="{{users._id}}">
+                <button type="submit" class="btnP">Finalizar Compra</button>
+            </form>
+        </div>
+
+{{!-- 
+    <style>
+        .border th,
+        .border td {
+            border: 1px solid rgb(255, 255, 255);
+            /* Agrega un borde a todas las celdas */
+            padding: 8px;
+            /* Opcional, para espaciado dentro de las celdas */
+            background-color: #1C1F30;
+            text-align: center;
+        }
+    </style> --}}

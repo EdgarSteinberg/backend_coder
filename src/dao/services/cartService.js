@@ -40,6 +40,13 @@ class CartService {
         return await cartModel.findByIdAndUpdate(cid, update, { new: true });
     }
 
+    async updateProductStock(pid, quantity) {
+        return await cartModel.updateMany(
+            { 'products.product': pid },
+            { $inc: { 'products.$.quantity': quantity } }
+        );
+    }
+
 }
 
 export { CartService }

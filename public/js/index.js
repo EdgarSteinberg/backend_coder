@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 stock: stock,
                 category: category,
                 owner: owner,
-                thumbnail:thumbnail
+                thumbnail: thumbnail
             };
 
 
@@ -53,26 +53,126 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             listaProductos.appendChild(nuevoElementoProducto);
         });
-    }
-
+    } 
     const listaProductos = document.getElementById('listaProductos');
     if (listaProductos) {
         listaProductos.addEventListener('click', function (event) {
             const deleteButton = event.target.closest('.delete');
             if (deleteButton) {
                 const productId = deleteButton.getAttribute('data-productid');
-                const productElement = deleteButton.closest('.products');
-                if (productElement) {
-                    productElement.remove();
-                    console.log('Producto eliminado del DOM:', productId);
+                const owner = deleteButton.getAttribute('data-owner');
+                const currentUserEmail = document.querySelector('.currentUserEmail').value;
+                const currentUserRole = document.getElementById('currentUserRole').value;
+                console.log('emial', currentUserEmail)
+                if (currentUserRole === 'admin' || owner === currentUserEmail) {
+                    // Permite la eliminación si el usuario es admin o el propietario del producto
+                    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                        // Elimina el producto del DOM
+                        const productElement = deleteButton.closest('.products');
+                        if (productElement) {
+                            productElement.remove();
+                            console.log('Producto eliminado del DOM:', productId);
+                        } else {
+                            console.error('El producto con ID', productId, 'no se encontró en el DOM.');
+                        }
+                        // Envía el ID del producto al servidor para eliminarlo
+                        socket.emit('eliminarProducto', productId);
+                    }
                 } else {
-                    console.error('El producto con ID', productId, 'no se encontró en el DOM.');
+                    alert('No tienes permiso para eliminar este producto.');
                 }
-                socket.emit('eliminarProducto', productId);
             }
         });
     }
 });
+
+// document.addEventListener('DOMContentLoaded', function () {
+
+//     const formulario = document.getElementById('formulario');
+//     if (formulario) {
+//         formulario.addEventListener('submit', function (event) {
+//             event.preventDefault();
+
+//             // Crear un objeto FormData para manejar archivos
+//             const formData = new FormData(formulario);
+
+//             // Extraer los datos del formulario
+//             const nuevoProducto = {
+//                 title: formData.get('title'),
+//                 description: formData.get('description'),
+//                 price: formData.get('price'),
+//                 code: formData.get('code'),
+//                 stock: formData.get('stock'),
+//                 category: formData.get('category'),
+//                 owner: formData.get('owner') || "admin"
+//             };
+
+//             // Obtener archivos de thumbnail
+//             const archivos = formData.getAll('thumbnail');
+
+//             // Leer archivos y convertir a URL de datos
+//             const readerPromises = archivos.map((file) => {
+//                 return new Promise((resolve) => {
+//                     const reader = new FileReader();
+//                     reader.onloadend = () => resolve(reader.result);
+//                     reader.readAsDataURL(file);
+//                 });
+//             });
+
+//             // Esperar a que todos los archivos sean leídos
+//             Promise.all(readerPromises).then((fileURLs) => {
+//                 // Agregar las URLs de los archivos al objeto nuevoProducto
+//                 nuevoProducto.thumbnail = fileURLs;
+
+//                 // Emitir el producto nuevo por WebSocket
+//                 socket.emit('nuevoProducto', nuevoProducto);
+
+//                 // Restablecer el formulario
+//                 formulario.reset();
+//             });
+//         });
+
+//         socket.on('productoAgregado', (nuevoProducto) => {
+//             console.log('Datos del nuevo producto:', nuevoProducto);
+//             const listaProductos = document.getElementById('listaProductos');
+//             const nuevoElementoProducto = document.createElement('div');
+//             nuevoElementoProducto.classList.add('products');
+//             nuevoElementoProducto.id = nuevoProducto.id;
+
+//             // Crear el HTML para las imágenes
+//             const thumbnailsHTML = nuevoProducto.thumbnail.map((url) => `<img src="${url}" alt="Imagen del producto">`).join('');
+
+//             nuevoElementoProducto.innerHTML = `
+//                 <h2>${nuevoProducto.title}</h2>
+//                 <p>Descripción: ${nuevoProducto.description}</p>
+//                 <p>Precio: $ ${nuevoProducto.price}</p>
+//                 <p>Código: ${nuevoProducto.code}</p>
+//                 <p>Categoría: ${nuevoProducto.category}</p>
+//                 ${thumbnailsHTML}
+//                 <br>
+//                 <button class="delete" data-productid="${nuevoProducto.id}">Eliminar</button>
+//             `;
+//             listaProductos.appendChild(nuevoElementoProducto);
+//         });
+//     }
+//     const listaProductos = document.getElementById('listaProductos');
+//     if (listaProductos) {
+//         listaProductos.addEventListener('click', function (event) {
+//             const deleteButton = event.target.closest('.delete');
+//             if (deleteButton) {
+//                 const productId = deleteButton.getAttribute('data-productid');
+//                 const productElement = deleteButton.closest('.products');
+//                 if (productElement) {
+//                     productElement.remove();
+//                     console.log('Producto eliminado del DOM:', productId);
+//                 } else {
+//                     console.error('El producto con ID', productId, 'no se encontró en el DOM.');
+//                 }
+//                 socket.emit('eliminarProducto', productId);
+//             }
+//         });
+//     }
+// });
 
 // document.addEventListener('DOMContentLoaded', function () {
 //     const addToCartButtons = document.querySelectorAll('.agregar');

@@ -1,0 +1,30 @@
+<div class="box">
+    <br>
+    <br>
+    <h1>Ticket de Compra</h1>
+    <p><strong>Código:</strong> {{ticket._id}}</p>
+    <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
+    <p><strong>Total:</strong> ${{ticket.amount}}</p>
+    <p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
+    
+    {{#if failedProducts.length}}
+        <h2>Productos No Comprados</h2>
+        <ul>
+            {{#each failedProducts}}
+                <li>
+                    <p><strong>Nombre:</strong> {{this.title}}</p>
+                    <p><strong>Descripción:</strong> {{this.description}}</p>
+                    <p><strong>Precio:</strong> ${{this.price}}</p>
+                    <p><strong>Stock:</strong> {{this.stock}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No hubo productos que no se pudieron comprar.</p>
+    {{/if}}
+    
+    <a href="/"><button class="success agregar">Inicio</button></a>
+     <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Session</button>
+    </form>
+</div>

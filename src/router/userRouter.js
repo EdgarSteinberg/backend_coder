@@ -29,6 +29,7 @@ UserRouter.post('/register', addLogger, async (req, res, next) => {
         }
         res.redirect('/login');
     } catch (error) {
+        res.redirect('/register')
         req.logger.error(`Error al registrarse: ${error.message}`);
         next(error);
     }
@@ -46,17 +47,39 @@ UserRouter.post('/login', addLogger, async (req, res, next) => {
         }
         res.redirect('/');
     } catch (error) {
+        res.redirect('/?loginFailed=true')
         req.logger.error(`Error al iniciar sesion: ${error.message}`)
         next(error)
+
     }
 });
+// UserRouter.post('/login', addLogger, async (req, res, next) => {
+//     try {
+//         const { email, password } = req.body;
+//         console.log(`Login attempt for email: ${email}`);
+//         const token = await Users.login(email, password);
+
+//         res.cookie('auth', token, { maxAge: 60 * 60 * 1000 });
+
+//         if (process.env.NODE_ENV === 'test') {
+//             return res.status(201).send({ status: 'success', payload: { user: req.user, token } });
+//         }
+
+//         res.redirect('/'); // Redirige con un parámetro de consulta
+//     } catch (error) {
+//         req.logger.error(`Error al iniciar sesión: ${error.message}`);
+//         res.redirect('/?loginFailed=true'); // Redirige con un parámetro de consulta en caso de error
+//     }
+// });
+
+
 
 UserRouter.get('/current', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     const userDTO = new CurrentDTO(req.user)
     res.send({ status: 'succes', payload: { user: userDTO } });
 });
 
-UserRouter.get('/:uid', passport.authenticate('jwt', { session: false }),authorization(["admin"]),async (req, res) => {
+UserRouter.get('/:uid', passport.authenticate('jwt', { session: false }), authorization(["admin"]), async (req, res) => {
     try {
         const user = await Users.getUser(req.params.uid);
         res.send({ status: 'success', payload: user });
@@ -97,7 +120,6 @@ UserRouter.post('/recover-password', async (req, res) => {
 
 
 UserRouter.post('/reset-password', async (req, res) => {
-
     const { token, newPassword } = req.body;
     console.log('Token recibido en el formulario:', token)
     if (!token) {
@@ -180,7 +202,7 @@ UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false
         console.error('Error en la ruta:', error);
         res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message });
     }
-    
+
 });
 
 UserRouter.delete('/', passport.authenticate('jwt', { session: false }), authorization(["admin"]), async (req, res) => {
@@ -193,16 +215,16 @@ UserRouter.delete('/', passport.authenticate('jwt', { session: false }), authori
     }
 });
 
-UserRouter.delete('/:uid',passport.authenticate('jwt', { session: false }), authorization(["admin"]), async (req, res) => {
+UserRouter.delete('/:uid', passport.authenticate('jwt', { session: false }), authorization(["admin"]), async (req, res) => {
     const uid = req.params.uid
-    try{
+    try {
         const result = await Users.deleteUser(uid);
         if (!result) {
             return res.status(404).send({ status: 'error', message: 'Usuario no encontrado' });
         }
-        res.send({status: 'success',  message: 'Usuario eliminado correctamente'})
-    }catch(error) {
-        res.status(500).send({status: 'error', error: 'Error al eliminar el usuario'})
+        res.send({ status: 'success', message: 'Usuario eliminado correctamente' })
+    } catch (error) {
+        res.status(500).send({ status: 'error', error: 'Error al eliminar el usuario' })
     }
 });
 

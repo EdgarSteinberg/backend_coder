@@ -5,6 +5,7 @@ import { ProductController } from '../controllers/productController.js';
 import { CartController } from '../controllers/cartController.js';
 import { MessagesController } from '../controllers/messageController.js';
 import { userController } from '../controllers/userController.js';
+import { TicketController } from '../controllers/ticketController.js';
 
 import { authenticate, publicRoute } from '../middlewares/auth.js'
 import { authorization } from '../middlewares/authorization.js';
@@ -14,6 +15,7 @@ const Manager = new ProductController();
 const CartManager = new CartController();
 const Messages = new MessagesController();
 const Users = new userController();
+const Ticket = new TicketController();
 
 const router = Router();
 
@@ -60,33 +62,16 @@ router.get("/products", authenticate, async (req, res) => {
     }
 });
 
-// router.get("/products/:pid", passport.authenticate('jwt', { session: false }), authenticate, authorization('user'), async (req, res) => {
-//     const result = await Manager.getProductByID(req.params.pid)
-//       // Obtén el carrito del usuario por su ID
-//         const cart = await CartManager.getCartById(req.user._id);
-//      // Agrega el console.log para verificar req.user
-//      console.log('Usuario autenticado en product:ID:', req.user, "carrito del usuario", cart);
-//     res.render("product",
-//         {
-//             title: " Productos",
-//             product: result,
-//             style: "index.css",
-//             user: req.user
-//         });
-// });
 router.get("/products/:pid", passport.authenticate('jwt', { session: false }), authenticate, authorization('user'), async (req, res) => {
     try {
         // Obtén el producto por ID
         const product = await Manager.getProductByID(req.params.pid);
-
         // Obtén el usuario autenticado
         const user = req.user;
-
         // Verifica que el usuario tenga un carrito asociado
         if (!user.cart) {
             throw new Error('User does not have a cart assigned');
         }
-
         // Extrae el ID del carrito
         const cartId = user.cart;
 
@@ -168,7 +153,6 @@ router.get("/carts/:cid", authenticate, async (req, res) => {
             quantity: item.quantity
         }));
 
-        // Puedes usar los productos como quieras aquí, por ejemplo, pasándolos a la vista
         //console.log(products);
         res.render(
             "carts",
@@ -185,51 +169,13 @@ router.get("/carts/:cid", authenticate, async (req, res) => {
     }
 });
 
-
-// router.get("/carts/:cid", authenticate, async (req, res) => {
-//     try {
-//         const cart = await CartManager.getCartById(req.params.cid);
-//         console.log(cart);
-
-//         // Recorre los productos en el carrito
-//         const productIds = cart.products.map(item => item.product);
-//         console.log('Product IDs:', productIds);
-
-//         // Obtén detalles de los productos usando los IDs
-//         const products = await Promise.all(productIds.map(async productId => {
-//             const product = await Manager.getProductByID(productId);
-//             return {
-//                 productId: product._id,
-//                 title: product.title,
-//                 description: product.description,
-//                 price: product.price,
-//                 quantity: cart.products.find(p => p.product.toString() === productId.toString()).quantity
-//             };
-//         }));
-
-//         // Puedes usar los productos como quieras aquí, por ejemplo, pasándolos a la vista
-//         console.log(products);
-//         res.render("carts", {
-//             title: "Carrito Compras",
-//             cart: cart,
-//             products: products,
-//             style: "index.css"
-//         });
-//     } catch (error) {
-//         console.error("Error al obtener el carrito", error);
-//         res.status(500).json({ error: "Error interno del servidor" });
-//     }
-// });
-
 //Ruta Login Register Logout
 router.get("/login", publicRoute, (req, res) => {
     res.render(
         'login',
         {
             title: "Coder Login",
-            style: 'index.css',
-            //failLogin: req.session.failLogin ?? false 
-
+            style: 'index.css'
         });
 });
 
@@ -239,7 +185,6 @@ router.get("/register", publicRoute, (req, res) => {
         {
             title: 'Coder Register',
             style: 'index.css',
-            //failRegister: req.session.failRegister ?? false
         });
 });
 
@@ -265,34 +210,12 @@ router.get('/notFound', authenticate, (req, res) => {
 
 router.get("/mockingproducts", authenticate, authorization("admin"), async (req, res) => {
     const products = getMockedProducts()
-    for (const product of products) {
-        //console.log(product.id); // Accede al id de cada producto
-    }
-    // Obtén el usuario autenticado
-    const user = req.user;
-
-    // Verifica que el usuario tenga un carrito asociado
-    if (!user.cart) {
-        throw new Error('User does not have a cart assigned');
-    }
-
-    // Extrae el ID del carrito
-    const cartId = user.cart;
-
-    // Obtén el carrito del usuario por su ID
-    const cart = await CartManager.getCartById(cartId);
-    console.log('carito ID:', cart)
-    if (!cart) {
-        throw new Error('Cart not found');
-    }
     res.render(
         'faker',
         {
             title: 'Coder Faker',
             style: 'index.css',
-            products, // Pasamos los productos al contexto de la vista
-            user: req.user,
-            cart: cart
+            products
         });
 });
 
@@ -356,5 +279,70 @@ router.get("/admUsers", authenticate, authorization("admin"), async (req, res) =
     )
 });
 
+router.get('/purcharser', authenticate, async (req, res) => {
+    const user = req.user;
+    const cartId = user.cart;
+    const cart = await CartManager.getCartById(cartId);
+    //console.log('carrito', cart)
+
+    const products = cart.products.map(item => ({
+        productId: item.product, // Asegúrate de que esto contenga toda la información del producto
+        quantity: item.quantity
+    }));
+
+    // Variables para almacenar cantidades y precios
+    let totalPrice = 0;
+    const productTotals = []; // Para almacenar el total de cada producto
+
+    // Accede a la información del producto y al precio
+    for (const item of products) {
+        const product = item.productId; // Esto debe ser el objeto completo del producto
+        if (product) {
+            const productTotal = item.quantity * product.price; // Precio total por producto
+            productTotals.push({
+                productId: product._id,
+                title: product.title,
+                description: product.description,
+                quantity: item.quantity,
+                price: product.price,
+                total: productTotal
+            });
+
+            totalPrice += productTotal; // Acumula el precio total
+            console.log('Product:', product);
+            console.log('Price:', product.price);
+            console.log('Total for this product:', productTotal);
+        }
+    }
+
+    console.log('Product Totals:', productTotals);
+    console.log('Total Price:', totalPrice);
+
+    res.render(
+        'purcharser',
+        {
+            title: 'Order',
+            style: 'index.css',
+            products: productTotals,
+            users: user,
+            cart: cart,
+            totalPrice: totalPrice
+        }
+    )
+})
+
+router.get('/ticket/:tid', authenticate, async (req, res) => {
+    const { tid } = req.params;
+    const ticket = await Ticket.getTicketById(tid);
+
+    res.render(
+        'ticket',
+        {
+            title: 'ticket',
+            style: 'index.css',
+            ticket: ticket
+        }
+    )
+})
 
 export default router;

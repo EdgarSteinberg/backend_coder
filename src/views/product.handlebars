@@ -1,86 +1,25 @@
-{{!-- {{#each product}}
-{{#if this.description}}
-<div class="box">
-    <div class="products">
-        <h2 class="linea">{{this.title}}</h2>
-        <p>Description: {{this.description}}</p>
-        <p>Precio: {{this.price}}</p>
-        <p>Code: {{this.code}}</p>
-        <p>Category: {{this.category}}</p>
-        <!-- Incluye el cartId y el userId en los atributos data del botón -->
-        <button class="success agregar" type="submit" data-productid="{{this._id}}" data-cartid="{{../user.cart}}"
-            data-userid="{{../user._id}}">
-            Agregar al carrito
-        </button>
-    </div>
-</div>
-{{/if}}
-{{/each}}
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.agregar').forEach(button => {
-            button.addEventListener('click', async (event) => {
-                const productId = event.target.getAttribute('data-productid');
-                const cartId = event.target.getAttribute('data-cartid');
-                const userId = event.target.getAttribute('data-userid');
-
-                console.log("Carrito ID:", cartId, "Producto ID:", productId, "Usuario ID:", userId);
-
-                // Verifica que los valores no estén vacíos
-                if (!cartId || !productId || !userId) {
-                    console.error('ID del carrito, del producto o del usuario no proporcionado');
-                    return;
-                }
-
-                try {
-                    const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ userId, productId })
-                    });
-
-                    const result = await response.json();
-                    if (response.ok) {
-                        Swal.fire({
-                            title: "¡Producto agregado al carrito!",
-                            text: "¡Excelente elección!",
-                            icon: "success"
-                        });
-                        console.log('Producto agregado al carrito:', result);
-                    } else {
-                        console.error('Error al agregar el producto al carrito:', result.message);
-                    }
-                } catch (error) {
-                    console.error('Error de red:', error);
-                }
-            });
-        });
-    });
-
-</script> --}}
 <div class="containerHome">
-    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
     <a class="logout-link" href="/">Inicio</a>
     <a class="logout-link" href="/products">Productos</a>
-    <a class="logout-link" href="/carts/{{cart._id}}">Carrito</a>
-    <a class="logout-link" href="/chat">chat</a>
-    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
-    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
-    <a class="logout-link" href="/admUsers">Roles</a>
-     <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
-     <a href="/carts/{{cart._id}}">
+    <a class="logout-link" href="/chat">Contáctanos</a>
+    <a class="logout-link" href="/uploadDocuments">subir documentos</a>
+    <a class="logout-link" href="/realTimeProducts">subir productos</a>
+    <a class="logout-link" href="/admUsers">Gestión de roles</a>
+    {{!-- <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a> --}}
+    <a class="logout-link" href="/purcharser">Order</a>
+    <a class="logout-link" href="/mockingproducts">Faker</a>
+    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <a href="/carts/{{cart._id}}">
         <button class="successCart"> <i class="fas fa-shopping-cart"></i> Carrito</button></a>
     <form method="post" action="/api/users/logout">
-        <button class="logout-link" type="submit">Cerrar Session</button>
+    <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>
 <div>
     {{#each product}}
     {{#if this.description}}
+    <h1>Producto: {{this.title}}</h1>
     <div class="box">
         <div class="products">
             <h2 class="linea">{{this.title}}</h2>
@@ -88,62 +27,16 @@
             <p>Precio: {{this.price}}</p>
             <p>Code: {{this.code}}</p>
             <p>Category: {{this.category}}</p>
-            <!-- Añadir campo de entrada para cantidad -->
-            <input type="number" class="quantity" min="1" value="1" data-productid="{{this._id}}">
+            <p>Cantidad: {{this.stock}}</p>
+            <!-- Añadir campo de entrada para cantidad
+            <input type="number" class="quantity" min="1" value="1" data-productid="{{this._id}}"> -->
             <!-- Incluye el cartId y el userId en los atributos data del botón -->
             <button class="success agregar" type="submit" data-productid="{{this._id}}" data-cartid="{{../user.cart}}"
-                data-userid="{{../user._id}}">
+                data-userid="{{../user._id}}" data-stock="{{this.stock}}">
                 Agregar al carrito
             </button>
         </div>
     </div>
     {{/if}}
     {{/each}}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.agregar').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const productId = event.target.getAttribute('data-productid');
-                    const cartId = event.target.getAttribute('data-cartid');
-                    const userId = event.target.getAttribute('data-userid');
-                    const quantityInput = document.querySelector(`input[data-productid="${productId}"]`);
-                    const quantity = quantityInput ? parseInt(quantityInput.value, 10) : 1;
-
-                    console.log("Carrito ID:", cartId);
-                    console.log("Producto ID:", productId);
-                    console.log("Usuario ID:", userId);
-                    console.log("Cantidad seleccionada:", quantity);
-
-                    if (!cartId || !productId || !userId) {
-                        console.error('ID del carrito, del producto o del usuario no proporcionado');
-                        return;
-                    }
-
-                    try {
-                        const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ userId, productId, quantity })
-                        });
-
-                        const result = await response.json();
-                        if (response.ok) {
-                            Swal.fire({
-                                title: "¡Producto agregado al carrito!",
-                                text: "¡Excelente elección!",
-                                icon: "success"
-                            });
-                            console.log('Producto agregado al carrito:', result);
-                        } else {
-                            console.error('Error al agregar el producto al carrito:', result.message);
-                        }
-                    } catch (error) {
-                        console.error('Error de red:', error);
-                    }
-                });
-            });
-        });
-
-    </script>
+    <script src="/js/products.js"></script>

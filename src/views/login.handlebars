@@ -1,7 +1,7 @@
-<div>
-    <h1>LOGIN</h1>
-
-    <hr>
+<div >
+    <br>
+    <br>
+    <br>
     <span class="box">
         <a href="/api/gitHub">
             <button class="btnChat">
@@ -13,10 +13,10 @@
     </span>
     <br>
     <form class="box" method="post" action="/api/users/login">
-        <label for="email">Email</label>
+        <label class="label" for="email">Email</label>
         <input type="email" name="email" id="email">
 
-        <label for="password">Password</label>
+        <label class="label" for="password">Password</label>
         <input type="password" name="password" id="password">
 
         <button class="btnChat" type="submit">Login</button>
@@ -28,10 +28,8 @@
         </a>
     </span>
 
-    <p class="box">Olvidaste tu contraseña?</p>
-    <a class="box" href="/recover-password">
-        click aqui
-    </a>
+    <p class="box">Olvidaste tu contraseña</p>
+    <a class="box" href="/recover-password">click aqui</a>
 </div>
 
 {{#if failLogin}}
@@ -39,3 +37,4 @@
     alert('Login Failed!')
 </script>
 {{/if}}
+

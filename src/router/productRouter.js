@@ -20,7 +20,7 @@ Productrouter.get("/", addLogger, async (req, res, next) => {
         res.send({status: 'success',payload: { products: products, user: user }});
     } catch (error) {
         req.logger.error(`Error al buscar los productos ${error.message}`)
-        next(error); // Pasa el error al middleware de manejo de errores
+        next(error); 
     }
 });
 
@@ -117,7 +117,7 @@ Productrouter.delete("/:pid", addLogger, passport.authenticate('jwt', { session:
         const userRole = req.user.role;
         // Verificar permisos antes de eliminar el producto
         const product = await Manager.getProductByID(pid);
-
+        console.log('producto ruta delete',product, 'userRole', userRole)
         if (userRole === 'admin' || (userRole === 'premium' && product.owner === userEmail)) {
             const result = await Manager.deleteProduct(pid);
             res.send({ status: 'success', payload: result });

@@ -2,37 +2,39 @@
     <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
     <a class="logout-link" href="/">Inicio</a>
     <a class="logout-link" href="/products">Productos</a>
-    <a class="logout-link" href="/chat">chat</a>
-    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
-    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
-    <a class="logout-link" href="/admUsers">Roles</a>
-    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <a class="logout-link" href="/uploadDocuments">Subir documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Subir productos</a>
+    <a class="logout-link" href="/admUsers">Gestión de roles</a>
+    <a class="logout-link" href="/purcharser">Order</a>
+    <a class="logout-link" href="/api/docs">Desarrolladores</a>
     <form method="post" action="/api/users/logout">
-        <button class="logout-link" type="submit">Cerrar Session</button>
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>
-<div >
-<div class="containerChat">
-    <h2>Enviar Mensaje</h2>
-    <form id="mensajeForm">
-        <label for="user">Ingrese su Email</label><br>
-        <input class="inputChat" type="text" id="user" name="user"><br>
-    
-        <label for="message">Mensaje</label><br>
-        <textarea class="textareaChat" id="message" name="message" cols="50" rows="4"></textarea><br>
+<div>
+    <div class="containerChat">
+        <h2>Enviar Mensaje</h2>
+        <form id="mensajeForm">
+            <label for="user">Ingrese su Email</label><br>
+            <input class="inputChat" type="text" id="user" name="user"><br>
 
-        <button class="btnChat" type="submit">Enviar Mensaje</button>
-    </form>
+            <label for="message">Mensaje</label><br>
+            <textarea class="textareaChat" id="message" name="message" cols="100" rows="6"></textarea><br>
+            <div class="box">
+                <button class="btnP" type="submit">Enviar Mensaje</button>
+            </div>
+        </form>
 
-</div>
-<hr>
-
-<div id="messagesLogs">
-    {{#each chats}}
-    <div>
-        <h2>{{this.user}}</h2>
-        <p>{{this.message}}</p>
     </div>
-     {{/each}}
-</div>
+    <hr>
+
+    <div id="messagesLogs">
+        {{#each chats}}
+        <div class="boxChat">
+            <h2>{{this.user}}:</h2>
+            <p>{{this.message}}</p>
+        </div>
+        <hr>
+        {{/each}}
+    </div>

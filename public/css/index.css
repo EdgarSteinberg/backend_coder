@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
@@ -10,13 +10,17 @@ body {
 }
 
 a {
-    text-decoration: none;
     color: white;
 }
 
 h1 {
     text-align: center;
-    margin-top: 10px;
+    margin: 5px;
+}
+
+h2 {
+    text-align: center;
+    margin: 5px;
 }
 
 ul {
@@ -25,16 +29,14 @@ ul {
 
 p {
     margin: 5px;
-    /* max-width: 300px; */
     flex: 1;
-    /* Permite que los párrafos ocupen el espacio disponible */
 }
 
 hr {
     width: 100%;
 }
 
-.img1{
+.img1 {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -48,36 +50,35 @@ hr {
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-   
 }
 
 .containerHome {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 7px;
+    padding: 10px;
     flex-wrap: wrap;
-    margin:10px;
-    background-color:#1C1F30;
+    margin: 10px;
+    background-color: #1C1F30;
 }
 
 .containerData {
-    display: flex; /* Disposición en fila */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en una nueva línea si no caben en una línea */
-    gap: 20px; /* Espaciado entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos al centro */
-    padding: 10px; /* Espaciado interno */
-    background-color:#1C1F30;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+    background-color: #1C1F30;
+    margin: 10px;
 }
 
 .containerData p {
-    margin: 0; /* Elimina el margen por defecto */
-    font-size: 16px; /* Tamaño de fuente */
-    
+    margin: 0;
+    font-size: 16px;
 }
 
 .containerData b {
-    color: #333; /* Color del texto en negrita */
+    color: #333;
 }
 
 .products {
@@ -91,8 +92,8 @@ hr {
     margin: 10px;
     flex-wrap: wrap;
     text-align: center;
-    overflow: hidden; /* Esto evita que el contenido se desborde del contenedor */
-    background-color:#1C1F30;
+    overflow: hidden;
+    background-color: #1C1F30;
 }
 
 .products:hover {
@@ -105,7 +106,6 @@ hr {
     color: white;
     width: 300px;
     border-radius: 7px;
-
 }
 
 .delete:hover {
@@ -127,22 +127,38 @@ hr {
     color: white;
 }
 
-/* .success {
-    background-color: #1eb825;
-    padding: 7px;
-    margin-top: 15px;
-    border-radius: 5px;
-    border: 1px solid white;
-    transition: background-color 0.3s, color 0.3s; 
-    width: 200px;
-}     */
-
-
-
 .form {
-    flex-direction: column;
+    display: flex;
+    justify-content: center;
     text-align: center;
     align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.inputForm {
+    width: 200px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    margin: 10px;
+}
+
+label {
+    margin: 10px;
+    font-weight: bold;
+}
+.label {
+    margin: 1px;
+}
+
+.form {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
 }
 
 input {
@@ -170,16 +186,6 @@ input {
     background-color: #218838;
 }
 
-/* .linea {
-    border-bottom: 1px solid rgb(255, 255, 255);
-    margin-bottom: 10px;
-    padding-bottom: 15px;
-    color: rgb(255, 255, 255)
-} */
-
-
-/* chat */
-
 .containerChat {
     display: flex;
     flex-direction: column;
@@ -205,15 +211,18 @@ input {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;
-    /* Transición suave */
 }
 
 .btnChat:hover {
-    /* background-color: lightgray; */
     background-color: #0097a7;
 }
 
-/*login*/
+.boxChat {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
 
 .btnGit {
     background-color: #00bcd4;
@@ -234,9 +243,16 @@ input {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
-
+.boxNot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
 
 .logout {
     background-color: #00bcd4;
@@ -261,14 +277,11 @@ input {
     background-color: dimgrey;
 }
 
-
-
 .containerFaker {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    /* Alinea las tarjetas al principio verticalmente */
 }
 
 .productsFaker {
@@ -276,7 +289,6 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    /* Distribuye el espacio entre los elementos */
     border: 1px solid white;
     border-radius: 5px;
     padding: 10px;
@@ -285,9 +297,7 @@ input {
     text-align: center;
     max-width: 400px;
     min-height: 300px;
-    /* Ajusta la altura mínima según tus necesidades */
     flex-grow: 1;
-    /* Permite que las tarjetas crezcan uniformemente */
 }
 
 .imgFaker {
@@ -302,7 +312,7 @@ input {
 
 .info-message {
     font-size: 16px;
-    color: #333;
+    color: #ff0000;
     margin-top: 10px;
     margin-bottom: 20px;
 }
@@ -324,44 +334,65 @@ input.quantity-input {
 
 
 .logout-link {
-    background: none; /* Quita el fondo por defecto del botón */
-    border: none;     /* Quita el borde por defecto del botón */
-    text-decoration: none; /* Quita el subrayado */
-    color: white;    /* Establece el color del texto */
-    font-family: Arial, sans-serif; /* Tamaño del texto */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    padding: 0;      /* Quita el padding por defecto del botón */
+    background: none;
+    /* Quita el fondo por defecto del botón */
+    border: none;
+    /* Quita el borde por defecto del botón */
+    text-decoration: none;
+    /* Quita el subrayado */
+    color: white;
+    /* Establece el color del texto */
+    font-family: Arial, sans-serif;
+    /* Tamaño del texto */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
+    padding: 0;
+    /* Quita el padding por defecto del botón */
 }
 
 .logout-link:hover {
-    text-decoration: underline; /* Añade subrayado en hover para indicar interacción */
+    text-decoration: underline;
+    /* Añade subrayado en hover para indicar interacción */
 }
 
 
 .successCart {
-    background-color: #28a745; /* Color de fondo verde */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
-    text-align: center; /* Centra el texto */
-    text-decoration: none; /* Sin subrayado */
-    display: inline-flex; /* Ajusta el tamaño del botón y permite alinear elementos */
-    align-items: center; /* Alinea verticalmente el ícono y el texto */
-    font-size: 16px; /* Tamaño de la fuente del botón */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    background-color: #28a745;
+    /* Color de fondo verde */
+    color: white;
+    /* Color del texto */
+    border: none;
+    /* Sin borde */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    text-align: center;
+    /* Centra el texto */
+    text-decoration: none;
+    /* Sin subrayado */
+    display: inline-flex;
+    /* Ajusta el tamaño del botón y permite alinear elementos */
+    align-items: center;
+    /* Alinea verticalmente el ícono y el texto */
+    font-size: 16px;
+    /* Tamaño de la fuente del botón */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
 }
 
 .successCart i {
-    margin-right: 8px; /* Espaciado entre el ícono y el texto */
+    margin-right: 8px;
+    /* Espaciado entre el ícono y el texto */
 }
 
 .successCart:hover {
-    background-color: #218838; /* Color de fondo en hover */
+    background-color: #218838;
+    /* Color de fondo en hover */
 }
 
 
-.btnP{
+.btnP {
     background-color: #EAFF6A;
     padding: 10px;
     color: rgb(10, 10, 10);
@@ -369,10 +400,52 @@ input.quantity-input {
     border-radius: 7px;
     margin: 5px;
     cursor: pointer;
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el botón */
 
 }
 
-.btnP:hover{
+.btnP:hover {
     background-color: #cae421;
+}
+
+.nexContainer {
+    display: flex;
+    /* Usa flex para alinear el contenido */
+    justify-content: flex-end
+        /* Alinea el contenido al final del contenedor */
+}
+
+.nexContainerUno {
+    display: flex;
+    /* Usa flex para alinear el contenido */
+    justify-content: flex-start
+        /* Alinea el contenido al final del contenedor */
+}
+
+.next {
+    display: inline-flex;
+    /* Ajusta el tamaño del botón al contenido */
+    cursor: pointer;
+    font-size: 30px;
+    transition: transform 0.3s ease;
+    /* Suaviza la transición de escala */
+    margin: 0 15px 15px 0;
+}
+
+.next:hover {
+    transform: scale(1.1);
+    /* Aumenta el tamaño del botón al pasar el cursor */
+}
+
+
+
+.border th,
+.border td {
+    border: 1px solid rgb(255, 255, 255);
+    /* Agrega un borde a todas las celdas */
+    padding: 8px;
+    /* Opcional, para espaciado dentro de las celdas */
+    background-color: #1C1F30;
+    text-align: center;
 }

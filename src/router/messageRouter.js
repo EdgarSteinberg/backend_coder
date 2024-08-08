@@ -12,10 +12,7 @@ const Messages = new MessagesController();
 MessageRouter.get("/", addLogger, async (req, res, next) => {
     try {
         const result = await Messages.getAllMessages();
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.send({ status: 'success', payload: result });
     } catch (error) {
         req.logger.error(`Error al obtener mensajes: ${error.message}`)
         next(next)
@@ -25,10 +22,7 @@ MessageRouter.get("/", addLogger, async (req, res, next) => {
 MessageRouter.post("/", addLogger, passport.authenticate('jwt', { session: false }), authorization("user"), async (req, res, next) => {
     try {
         const result = await Messages.create(req.body);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.send({ status: 'success', payload: result });
     } catch (error) {
         req.logger.error(`Error al crear mensaje: ${error.message}`);
         next(error)

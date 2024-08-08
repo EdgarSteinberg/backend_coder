@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-
+//mocha .\test\Products.supertest.test.js
 const requester = supertest('http://localhost:8080');
 const testUser = {first_name: 'Juan', last_name: 'Tomaselli', email: 'jselli@gmail.com',age: 33, password: 'abc123'}
 let cookie;

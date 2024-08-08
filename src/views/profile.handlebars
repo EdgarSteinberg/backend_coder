@@ -1,3 +1,17 @@
+<div class="containerHome">
+    <h1>{{user.first_name}}</h1>
+    <a class="logout-link" href="/">Inicio</a>
+    <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">Contáctanos</a>
+    <a class="logout-link" href="/uploadDocuments">Subir documentos</a>
+    <a class="logout-link" href="/realTimeProducts">Subir productos</a>
+    <a class="logout-link" href="/purcharser">Order</a>
+    <a class="logout-link" href="/mockingproducts">Faker</a>
+    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <form method="post" action="/api/users/logout">
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
+    </form>
+</div>
 <div class="container">
     <h1>Tu sesión está activa. {{user.first_name}} {{user.username}}</h1>
     <hr>
@@ -8,10 +22,7 @@
         <p><b>Edad:</b>{{user.age}}</p>
         <p><b>Usuario:</b> {{user.username}}</p>
         <form method="post" action="/api/users/logout">
-            <button class="logout" type="submit">Logout</button>
+            <button class="btnP" type="submit">Cerrar Sesión</button>
         </form>
-
     </div>
-
-
 </div>

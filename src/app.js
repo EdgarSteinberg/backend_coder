@@ -91,6 +91,7 @@ app.use("/carts/:cid", cartRouter);
 app.use('/mockingproducts', fakerRouter);
 app.use('/reset-password', userRouter)
 app.use('/realTimeProducts', productRouter)
+app.use('/ticket/:tid', ticketRouter)
 
 app.use('/admUsers', userRouter)
 //Websocket||PORT8080

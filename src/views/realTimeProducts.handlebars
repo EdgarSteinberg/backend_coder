@@ -1,58 +1,56 @@
 <div class="containerHome">
-    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <h1>Bienvenido {{user.first_name}} </h1>
     <a class="logout-link" href="/">Inicio</a>
     <a class="logout-link" href="/products">Productos</a>
+    <a class="logout-link" href="/chat">Contáctanos</a>
+    <a class="logout-link" href="/uploadDocuments">Subir documentos</a>
+    <a class="logout-link" href="/admUsers">Gestión de roles</a>
+    <a class="logout-link" href="/purcharser">Order</a>
+    <a class="logout-link" href="/mockingproducts">Faker</a>
+    <a class="logout-link" href="/api/docs">Desarrolladores</a>
     <a class="logout-link" href="/carts/{{cart._id}}">Carrito</a>
-    <a class="logout-link" href="/chat">chat</a>
-    <a class="logout-link" href="/uploadDocuments">Carga tus documentos</a>
-    <a class="logout-link" href="/realTimeProducts">Carga tus productos</a>
-    <a class="logout-link" href="/admUsers">Roles</a>
     <form method="post" action="/api/users/logout">
-        <button class="logout-link" type="submit">Cerrar Session</button>
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>
 <div>
     <h1>Agregar Nuevo Producto</h1>
-    <form id="formulario" class="form" enctype="multipart/form-data">
-        <label for="title">Título:</label><br>
-        <input type="text" name="title" id="title" required><br>
+   <form id="formulario" class="form" enctype="multipart/form-data">
+        <label for="title">Título:</label>
+        <input class="inputForm" type="text" name="title" id="title" required>
 
-        <label for="description">Descripción:</label><br>
-        <input type="text" name="description" id="description" required><br>
+        <label for="description">Descripción:</label>
+        <input class="inputForm" type="text" name="description" id="description" required>
 
-        <label for="price">Precio:</label><br>
-        <input type="text" name="price" id="price" required><br>
+        <label for="price">Precio:</label>
+        <input class="inputForm" type="text" name="price" id="price" required>
 
-        <label for="code">Código:</label><br>
-        <input type="text" name="code" id="code" required><br>
+        <label for="code">Código:</label>
+        <input class="inputForm" type="text" name="code" id="code" required>
 
-        <label for="stock">Stock:</label><br>
-        <input type="text" name="stock" id="stock" required><br>
+        <label for="stock">Stock:</label>
+        <input class="inputForm" type="text" name="stock" id="stock" required>
 
-        <label for="category">Categoria:</label><br>
-        <input name="category" id="category" type="text"><br>
+        <label for="category">Categoria:</label>
+        <input class="inputForm" name="category" id="category" type="text">
 
-        <label for="thumbnail">Upload Thumbnail:</label><br>
-        <input type="file" name="thumbnail" id="thumbnail" multiple><br>
+        <label for="thumbnail">Upload Thumbnail:</label>
+        <input class="inputForm" type="file" name="thumbnail" id="thumbnail" multiple>
 
         {{#if premium}}
         <input type="hidden" name="owner" id="owner" value="{{user.email}}">
         {{/if}}
 
-        <input type="submit" value="Crear Producto" class="success">
+        <input type="submit" value="Enviar" class="success">
     </form>
 
     <hr>
-
     <h1>Listado de Productos en Tiempo Real</h1>
-
     <div class="container" id="listaProductos">
         {{#each products}}
         <div class="products">
-
             <h2 class="linea">{{this.title}}</h2>
-
             <p>Descripción: {{this.description}}</p>
             <p>Precio: $ {{this.price}}</p>
             <p>Código: {{this.code}}</p>
@@ -60,14 +58,12 @@
             <img src="{{this.thumbnail}}" alt="{{this.description}}">
             <!-- Input oculto para el correo electrónico del usuario -->
             <input type="hidden" name="userEmail" id="user-email" value="{{this.owner}}">
-
             <br>
-            <button class="delete" type="submit" data-productid="{{this._id}}">Eliminar</button>
-
-
+            {{!-- <button class="delete" type="submit"  data-productid="{{this._id}}" >Eliminar</button> --}}
+              <button class="delete" type="submit" data-productid="{{this._id}}" data-owner="{{this.owner}}">Eliminar</button>
         </div>
         {{/each}}
-        <input type="hidden" class="currentUserEmail" value="{{user.email}}"> <!-- Correo del usuario autenticado -->
+        <input type="hidden" class="currentUserEmail" value="{{user.email}}" > <!-- Correo del usuario autenticado -->
         <input type="hidden" id="currentUserRole" value="{{user.role}}">
     </div>
 

@@ -3,8 +3,10 @@ import GitHubStrategy from 'passport-github2';
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { CartController } from '../controllers/cartController.js';
 
 dotenv.config();
+const CartManager = new CartController();
 
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const SECRET_ID = process.env.GITHUB_CLIENT_SECRET;
@@ -23,15 +25,19 @@ const initializeGitHubPassport = () => {
                 try {
                     console.log(profile);
                     const email = profile._json.email || `${profile._json.login}@github.com`;
-
+                    
                     let user = await userModel.findOne({ $or: [{ email }, { username: profile.username }] }).lean();
+                    
+                    const cart = await CartManager.createCart();
+                    const cartId = cart._id;
 
                     if (!user) {
                         let newUser = {
                             username: profile._json.login,
                             name: profile._json.name,
                             email: email,
-                            password: ""
+                            password: "",
+                            cart: cartId 
                         };
                         const result = await userModel.create(newUser);
                         console.log('Nuevo usuario creado:', result);

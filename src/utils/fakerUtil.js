@@ -13,8 +13,6 @@ export const generateProduct = () => {
     };
 };
 
-
-
 export const getMockedProducts = (count = 100) => {
     const products = [];
     for (let i = 0; i < count; i++) {
@@ -22,7 +20,3 @@ export const getMockedProducts = (count = 100) => {
     }
     return products;
 };
-
-
-const testProduct = generateProduct();
-console.log('Generated Product ID:', testProduct.id);

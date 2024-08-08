@@ -311,11 +311,11 @@ class CartController {
                 );
             };
 
-            // Remover productos con stock insuficiente del carrito
-            if (failedProducts.length > 0) {
-                cart.products = cart.products.filter(item => !failedProducts.includes(item.product._id));
-                await cart.save();
-            };
+            // // Remover productos con stock insuficiente del carrito
+            // if (failedProducts.length > 0) {
+            //     cart.products = cart.products.filter(item => !failedProducts.includes(item.product._id));
+            //     await cart.save();
+            // };
 
             //Filtar solo el id del producto 
             const validProductsIds = validProducts.map(product => product.product._id);
@@ -345,7 +345,85 @@ class CartController {
             throw new Error('Error al procesar la compra: ' + error.message);
         }
     };
-
+    // async cartPurchase(cid, purchaser) {
+    //     try {
+    //         logger.debug(`Processing purchase for cart ID: ${cid} by user: ${purchaser}`);
+        
+    //         // Obtén el carrito como una instancia de Mongoose (sin .lean())
+    //         const cart = await CartServiceRepository.getById(cid);
+        
+    //         // Verifica si el carrito existe
+    //         if (!cart) {
+    //             logger.warning(`Cart with ID: ${cid} not found`);
+    //             throw new Error('Carrito no encontrado');
+    //         }
+        
+    //         // Obtén el email del comprador
+    //         const resultUserRepository = await UserServiceRespository.getById(purchaser);
+    //         const purchaserEmail = resultUserRepository.email;
+    //         logger.info(`purchaserEmail ${purchaserEmail}`);
+        
+    //         const validProducts = [];
+    //         const failedProducts = [];
+        
+    //         // Procesa los productos del carrito
+    //         for (let item of cart.products) {
+    //             const product = item.product;
+    //             if (product.stock >= item.quantity) {
+    //                 validProducts.push(item);
+    //             } else {
+    //                 failedProducts.push(product._id);
+    //             }
+    //         }
+        
+    //         // Actualiza el stock de los productos válidos y la cantidad en el carrito
+    //         for (let item of validProducts) {
+    //             await ProductServiceRespository.updateProductStock(
+    //                 item.product._id,
+    //                 -item.quantity // Restar la cantidad del stock
+    //             );
+        
+    //             await CartServiceRepository.updateQuantity(
+    //                 cid,
+    //                 item.product._id,
+    //                 item.quantity
+    //             );
+    //         }
+        
+    //         // Remover productos con stock insuficiente del carrito
+    //         if (failedProducts.length > 0) {
+    //             await CartServiceRepository.removeProducts(
+    //                 cid,
+    //                 { $pull: { products: { product: { $in: failedProducts } } } }
+    //             );
+    //         }
+        
+    //         // Crear el ticket
+    //         const ticketData = {
+    //             code: await this.generateUniqueCode(),
+    //             purchase_datetime: new Date(), // Usar Date() en lugar de Date.now()
+    //             amount: await this.calculateTotalAmount(validProducts),
+    //             purchaser: purchaserEmail,
+    //         };
+        
+    //         const ticket = await TicketServiceRepository.createTicket(ticketData);
+        
+    //         logger.info(`Purchase processed successfully for cart ID: ${cid}`);
+    //         return { validProducts: validProducts.map(item => item.product._id), failedProducts, cart, ticket };
+        
+    //     } catch (error) {
+    //         logger.error(`Error processing purchase for cart ID ${cid}: ${error.message}`);
+    //         CustomError.createError({
+    //             name: 'DatabaseError',
+    //             cause: error.message,
+    //             message: 'Error al procesar la compra',
+    //             code: ErrorCodes.DATABASE_ERROR
+    //         });
+    //         throw new Error('Error al procesar la compra: ' + error.message);
+    //     }
+    // }
+    
+    
     async generateUniqueCode() {
         try {
             const randomCode = Math.floor(Math.random() * 1000) + 1;

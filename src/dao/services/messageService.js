@@ -1,6 +1,5 @@
 import messageModel from '../../models/messagesModel.js';
 
-
 class MessageService {
 
     async getAll() {

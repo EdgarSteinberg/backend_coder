@@ -13,7 +13,7 @@ class TicketService {
 
     async getTicketById(tid) {
         try {
-            return await ticketModel.findOne({ _id: tid })
+            return await ticketModel.findOne({ _id: tid }).lean()// agregas lean
         } catch (error) {
             console.error(error.message);
             throw new Error(`El ticket con ID : ${tid} no existe`)

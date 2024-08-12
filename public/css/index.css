@@ -151,6 +151,7 @@ label {
     margin: 10px;
     font-weight: bold;
 }
+
 .label {
     margin: 1px;
 }
@@ -497,4 +498,23 @@ input.quantity-input {
     cursor: pointer;
     border-radius: 7px;
     border: 1px solid white;
+}
+
+@media screen and (max-width: 400px) {
+    .logout-link {
+        display: inline-block; /* Asegura que el enlace se comporte como un bloque en línea */
+        background-color: white; 
+        border: 1px solid black;
+        border-radius: 5px; 
+        color: black; 
+        padding: 4px ;
+        text-align: center; 
+        font-size: 14px;
+        font-weight: bold; 
+    }
+
+    .logout-link:hover {
+        background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
+        border-color: #333; /* Color del borde al pasar el ratón */
+    }
 }

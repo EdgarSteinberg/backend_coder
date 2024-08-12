@@ -68,7 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Comparar cantidad con stock
             if (quantity > stock) {
-                alert(`La cantidad solicitada (${quantity}) excede el stock disponible (${stock}).`);
+                Swal.fire({
+                    title: 'Cantidad Excedida',
+                    text: `La cantidad solicitada: ${quantity} excede el stock disponible ${stock}.`,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
                 return; // Salir de la función si la cantidad excede el stock
             }
             console.log("PRODUCTOID: ", productId, "CARRITOID: ", cartId, "CANTIDAD: ", quantity);

@@ -43,7 +43,7 @@ class TicketController {
             };
 
             const result = await TicketServiceRepository.createTicket(newTicket);
-            //await CartServiceRepository.updateCartWithTicket(cart, result._id);
+
             logger.info(`Ticket creado exitosamente: ${JSON.stringify(result)}`);
             return result
         } catch (error) {

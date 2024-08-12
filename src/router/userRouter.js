@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import { userController } from '../controllers/userController.js';
 import CurrentDTO from '../dao/dto/currentDTO.js';
@@ -8,7 +9,6 @@ import CurrentDTO from '../dao/dto/currentDTO.js';
 import addLogger from '../logger.js'
 import { authorization } from '../middlewares/authorization.js';
 import { uploader } from '../utils/multerUtil.js';
-import dotenv from 'dotenv';
 
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -29,7 +29,7 @@ UserRouter.post('/register', addLogger, async (req, res, next) => {
         }
         res.redirect('/login');
     } catch (error) {
-        res.redirect('/register')
+        res.redirect('/register?failRegister=true')
         req.logger.error(`Error al registrarse: ${error.message}`);
         next(error);
     }
@@ -47,32 +47,12 @@ UserRouter.post('/login', addLogger, async (req, res, next) => {
         }
         res.redirect('/');
     } catch (error) {
-        res.redirect('/?loginFailed=true')
+        res.redirect('/login?failLogin=true');
         req.logger.error(`Error al iniciar sesion: ${error.message}`)
         next(error)
 
     }
 });
-// UserRouter.post('/login', addLogger, async (req, res, next) => {
-//     try {
-//         const { email, password } = req.body;
-//         console.log(`Login attempt for email: ${email}`);
-//         const token = await Users.login(email, password);
-
-//         res.cookie('auth', token, { maxAge: 60 * 60 * 1000 });
-
-//         if (process.env.NODE_ENV === 'test') {
-//             return res.status(201).send({ status: 'success', payload: { user: req.user, token } });
-//         }
-
-//         res.redirect('/'); // Redirige con un parámetro de consulta
-//     } catch (error) {
-//         req.logger.error(`Error al iniciar sesión: ${error.message}`);
-//         res.redirect('/?loginFailed=true'); // Redirige con un parámetro de consulta en caso de error
-//     }
-// });
-
-
 
 UserRouter.get('/current', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     const userDTO = new CurrentDTO(req.user)

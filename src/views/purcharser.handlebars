@@ -3,11 +3,11 @@
     <a class="logout-link" href="/products">Productos</a>
     <a class="logout-link" href="/chat">Contáctanos</a>
     <a class="logout-link" href="/uploadDocuments">Subir documentos</a>
-    <a class="logout-link" href="/realTimeProducts">Agregar productos</a>
+    <a class="logout-link" href="/realTimeProducts">Subir productos</a>
     <a class="logout-link" href="/admUsers">Gestión de roles</a>
     <a class="logout-link" href="/mockingproducts">Faker</a>
     <a class="logout-link" href="/purcharser">Order</a>
-    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <a class="logout-link" href="/api/docs" target="_blank" rel="noopener noreferrer">Desarrolladores</a>
     <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
     <form method="post" action="/api/users/logout">
         <button class="logout-link" type="submit">Cerrar Sesión</button>
@@ -54,7 +54,7 @@
             </table>
             <br>
             <h3>Total de la compra:</h3>
-            <p>${{totalPrice}}</p> 
+            <p>${{totalPrice}}</p>
 
             <!-- Formulario para finalizar la compra -->
             <form method="post" action="/api/cart/{{cart._id}}/purchase">
@@ -62,16 +62,3 @@
                 <button type="submit" class="btnP">Finalizar Compra</button>
             </form>
         </div>
-
-{{!-- 
-    <style>
-        .border th,
-        .border td {
-            border: 1px solid rgb(255, 255, 255);
-            /* Agrega un borde a todas las celdas */
-            padding: 8px;
-            /* Opcional, para espaciado dentro de las celdas */
-            background-color: #1C1F30;
-            text-align: center;
-        }
-    </style> --}}

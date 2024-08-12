@@ -39,10 +39,20 @@
         </a>
     </span>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{#if failRegister}}
 <script>
-    alert('Register Failed!')
+    Swal.fire({
+        title: 'Registro Fallido',
+        text: 'No se pudo completar el registro. Verifica que todos los campos estén correctamente llenos y que tu email no esté ya registrado.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Recarga la página después de que el usuario cierra la alerta
+            window.location.href = '/register';
+        }
+    });
 </script>
 {{/if}}

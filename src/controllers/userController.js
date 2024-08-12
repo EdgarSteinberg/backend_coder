@@ -78,11 +78,8 @@ class userController {
                 password: hashedPassword,
                 username,
                 role,
-                //cart: cartId
-                // cart:cart._id // Asignar el ID del carrito al usuario
+        
             });
-
-
 
             // Asignar el carrito al usuario
             newUser.cart = cartId;
@@ -231,8 +228,7 @@ class userController {
                      <p>El equipo de soporte de AppCoder</p>
                    </div>`,
         });
-        //transport.close();
-        //res.redirect('/check-email');
+
         return token;
     }
 
@@ -271,68 +267,10 @@ class userController {
         }
     }
 
-    // async deleteInactiveUsers() {
-    //     const TWO_DAYS_AGO = dayjs().subtract(2, 'day').toDate(); // Cambiado a 2 días
-
-    //     console.log('Tiempo de referencia (2 días atrás):', TWO_DAYS_AGO);
-
-    //     try {
-    //         // Obtener todos los usuarios
-    //         const users = await UserServiceRespository.getAll();
-
-    //         // Filtrar usuarios inactivos
-    //         const inactiveUsers = users.filter(user => {
-    //             const lastConnection = new Date(user.last_connection);
-    //             console.log('Última conexión del usuario:', lastConnection);
-    //             return lastConnection < TWO_DAYS_AGO;
-    //         });
-
-    //         if (inactiveUsers.length === 0) {
-    //             console.log('No hay usuarios inactivos para eliminar');
-    //             return { status: 'success', message: 'No hay usuarios inactivos' };
-    //         }
-
-    //         // Configurar el transporte para el envío de correos electrónicos
-    //         const transport = nodemailer.createTransport({
-    //             service: 'gmail',
-    //             port: 587,
-    //             auth: {
-    //                 user: process.env.EMAIL_USER,
-    //                 pass: process.env.EMAIL_PASS
-    //             }
-    //         });
-
-    //         for (const user of inactiveUsers) {
-    //             // Eliminar usuario
-    //             await UserServiceRespository.deleteUserById(user._id);
-
-    //             // Enviar correo electrónico informando la eliminación
-    //             await transport.sendMail({
-    //                 from: 'Edgar Steinberg <s.steinberg2019@gmail.com>',
-    //                 to: user.email,
-    //                 subject: 'Eliminación de Cuenta por Inactividad',
-    //                 html: `<div style="font-family: Arial, sans-serif; color: #333;">
-    //                         <h1>Cuenta Eliminada</h1>
-    //                         <p>Hola ${user.first_name},</p>
-    //                         <p>Te informamos que tu cuenta ha sido eliminada debido a inactividad durante más de 2 días.</p>
-    //                         <p>Si crees que esto es un error, por favor, contáctanos.</p>
-    //                         <p>Gracias,</p>
-    //                         <p>El equipo de soporte de AppCoder</p>
-    //                        </div>`,
-    //             });
-    //         }
-
-    //         return { status: 'success', message: `Eliminados ${inactiveUsers.length} usuarios inactivos` };
-    //     } catch (error) {
-    //         console.error('Error al eliminar usuarios inactivos:', error);
-    //         throw new Error('Error al eliminar usuarios inactivos');
-    //     }
-    // }
-    
     async deleteInactiveUsers() {
-        //const TWO_DAYS_AGO = dayjs().subtract(2, 'day').toDate(); // Cambiado a 2 días
-        const THIRTY_MINUTES_AGO = dayjs().subtract(30, 'minute').toDate();
-        console.log('Tiempo de referencia (30 minutos atrás):', THIRTY_MINUTES_AGO);
+        const TWO_DAYS_AGO = dayjs().subtract(2, 'day').toDate(); // Cambiado a 2 días
+        //const THIRTY_MINUTES_AGO = dayjs().subtract(30, 'minute').toDate();
+        console.log('Tiempo de referencia (30 minutos atrás):', TWO_DAYS_AGO);
 
 
         try {
@@ -343,7 +281,7 @@ class userController {
             const inactiveUsers = users.filter(user => {
                 const lastConnection = new Date(user.last_connection);
                 console.log('Última conexión del usuario:', lastConnection);
-                return lastConnection < THIRTY_MINUTES_AGO;
+                return lastConnection < TWO_DAYS_AGO;
             });
 
             if (inactiveUsers.length === 0) {
@@ -390,7 +328,6 @@ class userController {
         }
     }
 
-    // Controlador
     async deleteUser(id) {
         try {
             const result = await UserServiceRespository.deleteUserById(id);

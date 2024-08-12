@@ -2,6 +2,7 @@
     <br>
     <br>
     <h1>Ticket de Compra</h1>
+    <br>
     <p><strong>Código:</strong> {{ticket._id}}</p>
     <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
     <p><strong>Total:</strong> ${{ticket.amount}}</p>
@@ -25,6 +26,6 @@
     
     <a href="/"><button class="success agregar">Inicio</button></a>
      <form method="post" action="/api/users/logout">
-        <button class="logout-link" type="submit">Cerrar Session</button>
+        <button class="delete" type="submit">Cerrar Session</button>
     </form>
 </div>

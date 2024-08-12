@@ -5,14 +5,13 @@
     <a class="logout-link" href="/uploadDocuments">subir documentos</a>
     <a class="logout-link" href="/realTimeProducts">subir productos</a>
     <a class="logout-link" href="/admUsers">Gestión de roles</a>
-    {{!-- <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a> --}}
     <a class="logout-link" href="/purcharser">Order</a>
     <a class="logout-link" href="/mockingproducts">Faker</a>
-    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <a class="logout-link" href="/api/docs" target="_blank" rel="noopener noreferrer">Desarrolladores</a>
     <a href="/carts/{{cart._id}}">
         <button class="successCart"> <i class="fas fa-shopping-cart"></i> Carrito</button></a>
     <form method="post" action="/api/users/logout">
-    <button class="logout-link" type="submit">Cerrar Sesión</button>
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>

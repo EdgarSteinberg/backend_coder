@@ -3,9 +3,7 @@ import passport from 'passport';
 
 import { ProductController } from '../controllers/productController.js';
 import { authorization } from '../middlewares/authorization.js';
-
 import { uploader } from '../utils/multerUtil.js'
-import { authenticate } from '../middlewares/auth.js'
 import addLogger from '../logger.js';
 
 const Productrouter = Router();
@@ -35,35 +33,6 @@ Productrouter.get('/:pid', addLogger, async (req, res, next) => {
     }
 });
 
-// Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false }), authorization(["admin", "premium"]), uploader.array('thumbnail', 1), async (req, res, next) => {
-//     try {
-
-//         if (req.files) {
-//             console.log('Archivos recibidos:', req.files); // Log para verificar archivos recibidos
-//             req.body.thumbnail = [];
-//             req.files.forEach((file) => {
-//                 req.body.thumbnail.push(file.filename);
-//             });
-//             console.log('Thumbnail array:', req.body.thumbnail); // Verificar el array de thumbnail
-//         }
-//         const userEmail = req.user.email;
-//         const userRole = req.user.role;
-
-//         if (userRole === 'premium') {
-//             req.body.owner = userEmail;
-//         } else {
-//             req.body.owner = 'admin';
-//         }
-
-//         const result = await Manager.createProduct(req.body);
-//         res.send({status: 'success',payload: result});
-//     } catch (error) {
-//         req.logger.error(`Error al crear el producto ${error.message}`)
-//         next(error); // Pasa el error al middleware de manejo de errores
-
-//     }
-// });
-
 Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false }), authorization(["admin", "premium"]), uploader.array('thumbnail', 3), async (req, res, next) => {
     try {
         if (req.files && req.files.length > 0) {
@@ -90,7 +59,6 @@ Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false
         next(error);
     }
 });
-
 
 Productrouter.put("/:pid", addLogger, uploader.array('thumbnails', 3), async (req, res, next) => {
     if (req.files) {

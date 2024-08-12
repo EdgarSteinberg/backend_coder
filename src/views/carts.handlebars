@@ -1,5 +1,4 @@
 <div class="containerHome">
-    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
     <a class="logout-link" href="/">Inicio</a>
     <a class="logout-link" href="/products">Productos</a>
     <a class="logout-link" href="/chat">Contáctanos</a>
@@ -8,43 +7,41 @@
     <a class="logout-link" href="/admUsers">Gestión de roles</a>
     <a class="logout-link" href="/purcharser">Order</a>
     <a class="logout-link" href="/mockingproducts">Faker</a>
-    <a class="logout-link" href="/api/docs">Desarrolladores</a>
+    <a class="logout-link" href="/api/docs" target="_blank" rel="noopener noreferrer">Desarrolladores</a>
     <form method="post" action="/api/users/logout">
         <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>
-<div >
-<h1>Carrito de Compras</h1>
-<div class="container">
-    {{#each cart.products}}
-    <div class="products">
-        <p>Producto: {{this.product.title}}</p>
-        <p>Descripción: {{this.product.description}}</p>
-        <p>Precio: {{this.product.price}}</p>
-        <p>Stock: {{this.product.stock}}</p>
-        <p>Cantidad: </p>
-        {{!-- <input type="number" class="quantity-input" data-productid="{{this.product._id}}" value="{{this.quantity}}"
-            min="1"  style="width: 50%;">
-        <button class="update-quantity success" type="button" data-productid="{{this.product._id}}"
-            data-cartid="{{../cart._id}}">Actualizar Cantidad  <i class="fas fa-sync-alt"></i></button>
-        <button id="delete-product-{{this.product._id}}" class="delete" type="button"
-            data-productid="{{this.product._id}}" data-cartid="{{../cart._id}}"><i class="fas fa-trash-alt"></i></button> --}}
-    
-    <input type="number" class="quantity-input" data-productid="{{this.product._id}}" value="{{this.quantity}}"
-            min="1" max="{{this.product.stock}}" style="width: 50%;">
-        <button class="update-quantity success" type="button" data-productid="{{this.product._id}}"
-            data-cartid="{{../cart._id}}">Actualizar Cantidad <i class="fas fa-sync-alt"></i></button>
-        <button id="delete-product-{{this.product._id}}" class="delete" type="button"
-            data-productid="{{this.product._id}}" data-cartid="{{../cart._id}}"><i class="fas fa-trash-alt"></i></button>
-    </div>
-    {{/each}}
-</div>
-<div class="box">
-    <button id="delete-cart-{{cart._id}}" class="delete" data-cartid="{{cart._id}}"> <i class="fas fa-trash-alt"></i> Vaciar Carrito</button>
+<div class="containerHome">
+    <button id="delete-cart-{{cart._id}}" class="delete" data-cartid="{{cart._id}}"> <i class="fas fa-trash-alt"></i>
+        Vaciar Carrito</button>
+    <h1>Carrito de Compras</h1>
     <a href="/purcharser">
-    <button class="success agregar"><i class="fas fa-check"></i> Terminar Compra</button>
-</a>
-
+        <button class="success agregar"><i class="fas fa-check"></i> Terminar Compra</button>
+    </a>
 </div>
-<script src="/js/carts.js"></script>
+<div>
+    <div class="container">
+        {{#each cart.products}}
+        <div class="products">
+            <p>Producto: {{this.product.title}}</p>
+            <p>Descripción: {{this.product.description}}</p>
+            <p>Precio: {{this.product.price}}</p>
+            <p>Stock: {{this.product.stock}}</p>
+            <p>Cantidad: </p>
+            <input type="number" class="quantity-input" data-productid="{{this.product._id}}" value="{{this.quantity}}"
+                min="1" max="{{this.product.stock}}" style="width: 50%;">
+            <button class="update-quantity success" type="button" data-productid="{{this.product._id}}"
+                data-cartid="{{../cart._id}}">Actualizar Cantidad <i class="fas fa-sync-alt"></i></button>
+            <button id="delete-product-{{this.product._id}}" class="delete" style="width: 20%;" type="button"
+                data-productid="{{this.product._id}}" data-cartid="{{../cart._id}}"><i
+                    class="fas fa-trash-alt"></i></button>
+        </div>
+        {{/each}}
+    </div>
+    <div class="box">
+
+
+    </div>
+    <script src="/js/carts.js"></script>

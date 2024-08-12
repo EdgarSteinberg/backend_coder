@@ -1,4 +1,4 @@
-<div >
+<div>
     <br>
     <br>
     <br>
@@ -32,9 +32,20 @@
     <a class="box" href="/recover-password">click aqui</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {{#if failLogin}}
 <script>
-    alert('Login Failed!')
+    Swal.fire({
+        title: 'Error de Inicio de Sesión',
+        text: 'El inicio de sesión ha fallado. Por favor, revisa tu email y contraseña e intenta nuevamente.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirige a la página de login después de que el usuario cierre la alerta
+            window.location.href = '/login';
+        }
+    });
 </script>
 {{/if}}
-

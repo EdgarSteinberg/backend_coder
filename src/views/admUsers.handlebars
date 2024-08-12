@@ -1,5 +1,5 @@
 <div class="containerHome">
-    <h1>Bienvenido {{user.first_name}} {{user.username}} </h1>
+    <h1>Bienvenido {{user.first_name}}</h1>
     <a class="logout-link" href="/">Inicio</a>
     <a class="logout-link" href="/products">Productos</a>
     <a class="logout-link" href="/chat">Contáctanos</a>
@@ -7,109 +7,54 @@
     <a class="logout-link" href="/realTimeProducts">Subir productos</a>
     <a class="logout-link" href="/purcharser">Order</a>
     <a class="logout-link" href="/mockingproducts">Faker</a>
-    <a class="logout-link" href="/api/docs">Desarrolladores</a>
-    <a class="logout-link" href="/carts/{{cart._id}}"><i class="fas fa-shopping-cart"></i></a>
+    <a class="logout-link" href="/api/docs" target="_blank" rel="noopener noreferrer">Desarrolladores</a>
     <form method="post" action="/api/users/logout">
-       <button class="logout-link" type="submit">Cerrar Sesión</button>
+        <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
 </div>
 <hr>
-<div>
-    <div class="box">
-        <h1>Administrar Usuarios</h1>
-        <button class="btnDelete" onclick="deleteUsers()">Eliminar Usuarios Inactivos</button>
-    </div>
-    <br>
-    <div class="box">
-        <table class="border">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
 
-            {{#each users}}
+<div class="box">
+    <h1>Administrar Usuarios</h1>
+    <button class="buttonad btnDeletead" onclick="deleteUsers()">Eliminar Usuarios Inactivos</button>
+</div>
+<br>
+<div class="box">
+    <table class="border">
+        <thead>
             <tr>
-                <td>{{this._id}}</td>
-                <td>
-                    {{#if this.first_name}}
-                    {{this.first_name}}
-                    {{else}}
-                    {{this.username}}
-                    {{/if}}
-                </td>
-                <td>{{this.email}}</td>
-                <td>{{this.role}}</td>
-                <td>
-                    <button class="btnSucces" onclick="changeRole('{{this._id}}', 'premium')">Convertir a
-                        Premium</button>
-                    <button class="btnUser" onclick="changeRole('{{this._id}}', 'user')">Convertir a Usuario</button>
-                    <button class="btnDelete" onclick="deleteUser('{{this._id}}')">Eliminar Usuario</button>
-                </td>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
             </tr>
-            {{/each}}
+        </thead>
 
-        </table>
-    </div>
-    <script src="/js/adm.js"></script>
+        {{#each users}}
+        <tr>
+            <td>{{this._id}}</td>
+            <td>
+                {{#if this.first_name}}
+                {{this.first_name}}
+                {{else}}
+                {{this.username}}
+                {{/if}}
+            </td>
+            <td>{{this.email}}</td>
+            <td>{{this.role}}</td>
+            <td>
+                <button class="buttonad btnSuccesad" onclick="changeRole('{{this._id}}', 'premium')">Convertir a
+                    Premium</button>
+                <button class="buttonad btnUserad" onclick="changeRole('{{this._id}}', 'user')">Convertir a
+                    Usuario</button>
+                <button class="buttonad btnDeletead" onclick="deleteUser('{{this._id}}')">Eliminar Usuario</button>
+            </td>
+        </tr>
+        {{/each}}
 
-    <style>
-        .btnSucces {
-            background-color: green;
-            font-weight: bolder;
-            color: white;
-        }
+    </table>
+</div>
 
-        .btnSucces:hover {
-            background-color: rgb(12, 199, 12);
-            font-weight: bolder;
-            color: white;
-        }
 
-        .btnDelete {
-            background-color: rgb(153, 0, 0);
-            font-weight: bolder;
-            color: white;
-        }
-
-        .btnDelete:hover {
-            background-color: rgb(252, 0, 0);
-            font-weight: bolder;
-            color: white;
-        }
-
-        .btnUser {
-            background-color: #b7d110;
-            font-weight: bolder;
-            color: white;
-        }
-
-        .btnUser:hover {
-            background-color: #ddff03;
-            font-weight: bolder;
-            color: rgb(255, 255, 255);
-        }
-
-        button {
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 7px;
-            border: 1px solid white;
-        }
-
-        {{!-- .border th,
-        .border td {
-            border: 1px solid rgb(255, 255, 255);
-            /* Agrega un borde a todas las celdas */
-            padding: 8px;
-            /* Opcional, para espaciado dentro de las celdas */
-            background-color: #1C1F30;
-        } --}}
-    </style>
-
+<script src="/js/adm.js"></script>

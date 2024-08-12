@@ -1,16 +1,12 @@
 import { ProductController } from "./controllers/productController.js";
 import { MessagesController } from "./controllers/messageController.js";
-import { CartController } from "./controllers/cartController.js";
-import { userController } from "./controllers/userController.js";
+
 const Manager = new ProductController();
 const Message = new MessagesController();
-const CartManager = new CartController();
-const userManager = new userController();
-const SECRET_KEY = process.env.SECRET_KEY;
+
 export default (io) => {
     io.on("connection", (socket) => {
         //console.log("Nuevo cliente conectado ------>", socket.id);
-
 
         socket.on("nuevoProducto", async data => {
             console.log("Recibido nuevo producto: ", data);
@@ -22,6 +18,7 @@ export default (io) => {
             console.log("Producto enviado al cliente: ", dataWithID);
 
             socket.emit("productoAgregado", dataWithID);
+            
         });
 
         socket.on("eliminarProducto", async productId => {
@@ -47,29 +44,6 @@ export default (io) => {
             io.emit("nuevoMensaje", data);
         });
 
-
-        // socket.on('agregarProductoAlCarrito', async ({ productId }) => {
-        //     console.log('ID del producto recibido:', productId);
-        //     try {
-        //         // Crear un nuevo carrito
-        //         const cart = await CartManager.createCart();
-
-        //         // Obtener el ID del carrito creado
-        //         const cid = cart._id;
-
-        //         // Agregar el producto al carrito utilizando el ID del carrito y el ID del producto
-        //         const updatedCart = await CartManager.addProductByID(cid, productId);
-        //         console.log('Producto agregado al carrito:', updatedCart);
-        //         // Emitir un evento de confirmación al cliente con el carrito actualizado
-        //         socket.emit('productoAgregadoAlCarrito', updatedCart);
-        //     } catch (error) {
-        //         console.error('Error al agregar el producto al carrito:', error);
-        //         // Enviar un mensaje de error al cliente si es necesario
-        //     }
-        // });
-
-    
-        
         
     });
 

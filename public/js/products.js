@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (stock === 0) {
                 Swal.fire({
-                    title: "¡El producto no está disponible en stock!",
+                    title: "¡El producto no está disponible!",
                     icon: "error"
                 });
                 //alert('El producto no está disponible en stock.');
@@ -39,25 +39,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ userId, productId, quantity })
                 });
 
-                const result = await response.json();
                 if (response.ok) {
                     Swal.fire({
                         title: "¡Producto agregado al carrito!",
-                        icon: "success"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirige al usuario para terminar la compra
-                            // window.location.href = `/carts/${cartId}`; // Cambia la URL si es necesario
-                            button.textContent = 'Terminar Compra'
-                            button.addEventListener('click', () => {
-                                window.location.href = `/carts/${cartId}`;
-                            });
-                        } else {
-                            // Cambia el texto del botón
-                            button.textContent = 'Añadido al carrito';
-                            button.disabled = true; // Opcional: Desactivar el botón después de agregar al carrito
+                        icon: "success",
+                        html: `
+                          <a id="continueShopping" class="swal2-styled" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;" href="/products">Seguir comprando</a>
+                          <a id="completePurchase" class="swal2-styled" style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-left: 10px;" href="/carts/${cartId}">Termina tu compra</a>
+                        `,
+                        showConfirmButton: false // Opcional: Oculta el botón de confirmación de SweetAlert
+                    }).then(() => {
+                        // Opcional: Puedes manejar el enlace aquí si es necesario
+                        const redirectLink = document.getElementById('redirectLink');
+                        if (redirectLink) {
+                            redirectLink.click(); // Redirige automáticamente si quieres hacerlo aquí
                         }
                     });
+
                     console.log('Producto agregado al carrito:', result);
                 } else {
                     console.error('Error al agregar el producto al carrito:', result.message);

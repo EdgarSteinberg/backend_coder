@@ -33,13 +33,8 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    // thumbnail: {
-    //     type: Array,
-    //     required: false,
-    //     default: []
-    // },
     thumbnail: {
-        type: [String], // Asegúrate de que sea un array de strings
+        type: [String], 
         required: false,
         default: []
     },

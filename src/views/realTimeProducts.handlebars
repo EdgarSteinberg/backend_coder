@@ -7,8 +7,7 @@
     <a class="logout-link" href="/admUsers">Gestión de roles</a>
     <a class="logout-link" href="/purcharser">Order</a>
     <a class="logout-link" href="/mockingproducts">Faker</a>
-    <a class="logout-link" href="/api/docs">Desarrolladores</a>
-    <a class="logout-link" href="/carts/{{cart._id}}">Carrito</a>
+    <a class="logout-link" href="/api/docs" target="_blank" rel="noopener noreferrer">Desarrolladores</a>
     <form method="post" action="/api/users/logout">
         <button class="logout-link" type="submit">Cerrar Sesión</button>
     </form>
@@ -16,7 +15,7 @@
 <hr>
 <div>
     <h1>Agregar Nuevo Producto</h1>
-   <form id="formulario" class="form" enctype="multipart/form-data">
+    <form id="formulario" class="form" enctype="multipart/form-data">
         <label for="title">Título:</label>
         <input class="inputForm" type="text" name="title" id="title" required>
 
@@ -59,11 +58,12 @@
             <!-- Input oculto para el correo electrónico del usuario -->
             <input type="hidden" name="userEmail" id="user-email" value="{{this.owner}}">
             <br>
-            {{!-- <button class="delete" type="submit"  data-productid="{{this._id}}" >Eliminar</button> --}}
-              <button class="delete" type="submit" data-productid="{{this._id}}" data-owner="{{this.owner}}">Eliminar</button>
+            {{!-- <button class="delete" type="submit" data-productid="{{this._id}}">Eliminar</button> --}}
+            <button class="delete" type="submit" data-productid="{{this._id}}"
+                data-owner="{{this.owner}}">Eliminar</button>
         </div>
         {{/each}}
-        <input type="hidden" class="currentUserEmail" value="{{user.email}}" > <!-- Correo del usuario autenticado -->
+        <input type="hidden" class="currentUserEmail" value="{{user.email}}"> <!-- Correo del usuario autenticado -->
         <input type="hidden" id="currentUserRole" value="{{user.role}}">
     </div>
 

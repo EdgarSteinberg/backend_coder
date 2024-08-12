@@ -120,7 +120,6 @@ router.get("/realTimeProducts", passport.authenticate('jwt', { session: false })
                 user: req.user,
                 premium: req.user.role === 'premium',
                 admin: req.user.role === 'admin'
-                //premium: req.user.role === "premium" : "admin" // Pasa el rol del usuario específicamente
             });
     } catch (error) {
         // Manejo de errores
@@ -169,22 +168,22 @@ router.get("/carts/:cid", authenticate, async (req, res) => {
     }
 });
 
-//Ruta Login Register Logout
-router.get("/login", publicRoute, (req, res) => {
-    res.render(
-        'login',
-        {
-            title: "Coder Login",
-            style: 'index.css'
-        });
+router.get('/login', publicRoute, (req, res) => {
+    const failLogin = req.query.failLogin === 'true'; // Leer el parámetro de la URL
+    res.render('login', {
+        title: "Coder Login",
+        style: 'index.css',
+        failLogin // Pasar la variable a la vista
+    });
 });
-
 router.get("/register", publicRoute, (req, res) => {
+    const failRegister = req.query.failRegister === 'true'; 
     res.render(
         'register',
         {
             title: 'Coder Register',
             style: 'index.css',
+            failRegister
         });
 });
 
@@ -267,17 +266,51 @@ router.get("/uploadDocuments", authenticate, async (req, res) => {
     )
 });
 
-router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
-    const users = await Users.getAllUsersNew();
-    res.render(
-        'admUsers',
-        {
-            title: 'AdministrarUsuarios',
-            style: 'index.css',
-            users: users
+// router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
+//     const users = await Users.getAllUsersNew();
+//     res.render(
+//         'admUsers',
+//         {
+//             title: 'AdministrarUsuarios',
+//             style: 'index.css',
+//             users: users,
+//             user: req.user
+//         }
+//     )
+// });
+router.get("/admUsers", authenticate, authorization("admin"), async (req, res, next) => {
+    try {
+        const users = await Users.getAllUsersNew();
+
+        // Extraer los IDs de los carritos, asegurándote de que sean únicos
+        const cartIds = [...new Set(users.map(user => user.cart).filter(id => id))];
+        console.log('IDs de Carrito:', cartIds);
+
+        // Crear un objeto para almacenar los carritos
+        const cartsMap = {};
+
+        // Obtener todos los carritos uno por uno
+        for (const cartId of cartIds) {
+            const cart = await CartManager.getCartById(cartId);
+            console.log(`Carrito ${cartId}:`, cart);
+            cartsMap[cartId] = cart;
         }
-    )
+        console.log('Carritos Map:', cartsMap);
+
+        // Renderizar la vista con los usuarios y sus carritos
+        res.render('admUsers', {
+            title: 'Administrar Usuarios',
+            style: 'index.css',
+            users: users,
+            user: req.user,
+            carts: cartsMap // Pasar los carritos al template
+        });
+    } catch (error) {
+        req.logger.error(`Error al obtener usuarios y carritos: ${error.message}`);
+        next(error);
+    }
 });
+
 
 router.get('/purcharser', authenticate, async (req, res) => {
     const user = req.user;

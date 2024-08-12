@@ -10,20 +10,6 @@ const userSchema = mongoose.Schema({
     age: { type: Number, min: 18, require: true },
     password: { type: String, require: true },
     username: { type: String, unique: true, trim: true },
-    // cart: {
-    //     type: 
-    //       [
-    //         {
-    //             cart: {
-    //                 type: mongoose.Schema.ObjectId,
-    //                 ref: "carts",
-    //               // default : null//areglaste en lugar del array
-    //             }
-    //         }
-    //       ]
-    //     ,
-    //     //default: []
-    // },
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts",
@@ -52,10 +38,6 @@ const userSchema = mongoose.Schema({
     },
     last_connection: { type: Date }
 });
-
-// userSchema.pre('save', function () {
-//     this.password = createHash(this.password);
-// });
 
 
 const userModel = mongoose.model(userCollection, userSchema);

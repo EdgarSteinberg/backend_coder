@@ -9,7 +9,7 @@ function changeRole(userId, newRole) {
         .then(response => {
             if (response.ok) {
                 alert('Rol actualizado con éxito.');
-                window.location.reload(); // Recargar la página para ver los cambios
+                window.location.reload(); 
             } else {
                 return response.json().then(data => {
                     alert(`Error: ${data.error}`);
@@ -46,7 +46,7 @@ function deleteUsers() {
     fetch('/api/users', {
         method: 'DELETE'
     })
-        .then(res => res.json()) // Parsear la respuesta JSON
+        .then(res => res.json()) 
         .then(data => {
             if (data.status === 'success') {
                 if (data.message === 'No hay usuarios inactivos') {

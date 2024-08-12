@@ -60,12 +60,13 @@ hr {
     flex-wrap: wrap;
     margin: 10px;
     background-color: #1C1F30;
+    gap: 10px;
 }
 
 .containerData {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
     padding: 10px;
     background-color: #1C1F30;
@@ -75,6 +76,7 @@ hr {
 .containerData p {
     margin: 0;
     font-size: 16px;
+    text-align: center;
 }
 
 .containerData b {
@@ -448,4 +450,51 @@ input.quantity-input {
     /* Opcional, para espaciado dentro de las celdas */
     background-color: #1C1F30;
     text-align: center;
+}
+
+/*admin*/
+
+.btnSuccesad {
+    background-color: green;
+    font-weight: bolder;
+    color: white;
+}
+
+.btnSuccesad:hover {
+    background-color: rgb(12, 199, 12);
+    font-weight: bolder;
+    color: white;
+}
+
+.btnDeletead {
+    background-color: rgb(153, 0, 0);
+    font-weight: bolder;
+    color: white;
+}
+
+.btnDeletead:hover {
+    background-color: rgb(252, 0, 0);
+    font-weight: bolder;
+    color: white;
+}
+
+.btnUserad {
+    background-color: #b7d110;
+    font-weight: bolder;
+    color: white;
+}
+
+.btnUserad:hover {
+    background-color: #ddff03;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+}
+
+.buttonad {
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid white;
 }

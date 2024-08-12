@@ -99,7 +99,7 @@ class CartController {
             }
             logger.info(`Producto con ID: ${pid} cantidad incrementada en el carrito con ID: ${cid}`);
             return cart;
-        
+
         } catch (error) {
             // Maneja el error creando un error personalizado
             logger.error(`Error adding product with ID ${pid} to cart with ID ${cid}: ${error.message}`);
@@ -114,7 +114,7 @@ class CartController {
         }
     }
 
-    
+
     //Eliminar producto del carrito por su ID
     async deleteProductInCart(cid, pid) {
         try {
@@ -137,7 +137,7 @@ class CartController {
             }
             logger.info(`Product with ID: ${pid} deleted from cart with ID: ${cid}`);
             return cart;
-       
+
         } catch (error) {
             logger.error(`Error deleting product with ID ${pid} from cart with ID ${cid}: ${error.message}`);
             // Maneja cualquier otro error creando un error personalizado
@@ -175,7 +175,7 @@ class CartController {
             }
             logger.info(`Cart with ID: ${cid} updated successfully`);
             return cart;
-        
+
         } catch (error) {
             logger.error(`Error updating cart with ID ${cid}: ${error.message}`);
             CustomError.createError({
@@ -210,7 +210,7 @@ class CartController {
             }
             logger.info(`Quantity of product with ID: ${pid} updated to ${quantity} in cart with ID: ${cid}`);
             return cart;
-       
+
         } catch (error) {
             logger.error(`Error updating quantity of product with ID ${pid} in cart with ID ${cid}: ${error.message}`);
             CustomError.createError({
@@ -248,7 +248,7 @@ class CartController {
             logger.info(`All products removed from cart with ID: ${cid}`);
             // Devuelve el carrito actualizado
             return cart;
-      
+
         } catch (error) {
             logger.error(`Error removing all products from cart with ID ${cid}: ${error.message}`);
             // Maneja cualquier otro error creando un error personalizado de base de datos
@@ -262,8 +262,6 @@ class CartController {
             throw new Error('Error al eliminar todos los productos del carrito: ' + error.message);
         }
     }
-
-
 
     async calculateTotalAmount(validProducts) {
         let totalAmount = 0;
@@ -311,12 +309,6 @@ class CartController {
                 );
             };
 
-            // // Remover productos con stock insuficiente del carrito
-            // if (failedProducts.length > 0) {
-            //     cart.products = cart.products.filter(item => !failedProducts.includes(item.product._id));
-            //     await cart.save();
-            // };
-
             //Filtar solo el id del producto 
             const validProductsIds = validProducts.map(product => product.product._id);
 
@@ -333,7 +325,7 @@ class CartController {
             logger.info(`Purchase processed successfully for cart ID: ${cid}`);
             return { validProducts: validProductsIds, failedProducts, cart, ticket };
             //return { validProducts, failedProducts, cart };
-       
+
         } catch (error) {
             logger.error(`Error processing purchase for cart ID ${cid}: ${error.message}`);
             CustomError.createError({
@@ -345,85 +337,7 @@ class CartController {
             throw new Error('Error al procesar la compra: ' + error.message);
         }
     };
-    // async cartPurchase(cid, purchaser) {
-    //     try {
-    //         logger.debug(`Processing purchase for cart ID: ${cid} by user: ${purchaser}`);
-        
-    //         // Obtén el carrito como una instancia de Mongoose (sin .lean())
-    //         const cart = await CartServiceRepository.getById(cid);
-        
-    //         // Verifica si el carrito existe
-    //         if (!cart) {
-    //             logger.warning(`Cart with ID: ${cid} not found`);
-    //             throw new Error('Carrito no encontrado');
-    //         }
-        
-    //         // Obtén el email del comprador
-    //         const resultUserRepository = await UserServiceRespository.getById(purchaser);
-    //         const purchaserEmail = resultUserRepository.email;
-    //         logger.info(`purchaserEmail ${purchaserEmail}`);
-        
-    //         const validProducts = [];
-    //         const failedProducts = [];
-        
-    //         // Procesa los productos del carrito
-    //         for (let item of cart.products) {
-    //             const product = item.product;
-    //             if (product.stock >= item.quantity) {
-    //                 validProducts.push(item);
-    //             } else {
-    //                 failedProducts.push(product._id);
-    //             }
-    //         }
-        
-    //         // Actualiza el stock de los productos válidos y la cantidad en el carrito
-    //         for (let item of validProducts) {
-    //             await ProductServiceRespository.updateProductStock(
-    //                 item.product._id,
-    //                 -item.quantity // Restar la cantidad del stock
-    //             );
-        
-    //             await CartServiceRepository.updateQuantity(
-    //                 cid,
-    //                 item.product._id,
-    //                 item.quantity
-    //             );
-    //         }
-        
-    //         // Remover productos con stock insuficiente del carrito
-    //         if (failedProducts.length > 0) {
-    //             await CartServiceRepository.removeProducts(
-    //                 cid,
-    //                 { $pull: { products: { product: { $in: failedProducts } } } }
-    //             );
-    //         }
-        
-    //         // Crear el ticket
-    //         const ticketData = {
-    //             code: await this.generateUniqueCode(),
-    //             purchase_datetime: new Date(), // Usar Date() en lugar de Date.now()
-    //             amount: await this.calculateTotalAmount(validProducts),
-    //             purchaser: purchaserEmail,
-    //         };
-        
-    //         const ticket = await TicketServiceRepository.createTicket(ticketData);
-        
-    //         logger.info(`Purchase processed successfully for cart ID: ${cid}`);
-    //         return { validProducts: validProducts.map(item => item.product._id), failedProducts, cart, ticket };
-        
-    //     } catch (error) {
-    //         logger.error(`Error processing purchase for cart ID ${cid}: ${error.message}`);
-    //         CustomError.createError({
-    //             name: 'DatabaseError',
-    //             cause: error.message,
-    //             message: 'Error al procesar la compra',
-    //             code: ErrorCodes.DATABASE_ERROR
-    //         });
-    //         throw new Error('Error al procesar la compra: ' + error.message);
-    //     }
-    // }
-    
-    
+
     async generateUniqueCode() {
         try {
             const randomCode = Math.floor(Math.random() * 1000) + 1;
@@ -435,7 +349,10 @@ class CartController {
             throw new Error('Error al crear código aleatorio');
         }
     };
+    
+
 }
+
 
 export { CartController };
 

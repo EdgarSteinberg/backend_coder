@@ -39,4 +39,5 @@ export default class CartRepository {
         return await this.dao.updateProductStock(pid, quantity);
     }
 
+
 }

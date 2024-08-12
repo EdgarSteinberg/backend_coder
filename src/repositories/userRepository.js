@@ -8,8 +8,6 @@ export default class UserRepository {
 
     async getAll() {
         return await this.dao.getAll();
-        // const users = await this.dao.getAll();
-        // return users.map(user => new userDTO(user))
     }
 
     async getAllNew() {
@@ -38,7 +36,6 @@ export default class UserRepository {
     async getEmail(email) {
         return await this.dao.getEmail(email)
     }
-
 
     async updateLastConnection(email) {
         return await this.dao.updateLastConnection(email);

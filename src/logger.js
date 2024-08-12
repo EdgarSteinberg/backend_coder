@@ -9,7 +9,6 @@ const CustomErrLevels = {
     colors: { debug: 'blue', http: 'magenta', info: 'green', warning: 'yellow', error: 'red', fatal: 'red' }
 };
 
-
 // DevLogger
 const devLogger = winston.createLogger({
     levels: CustomErrLevels.levels,
@@ -21,7 +20,6 @@ const devLogger = winston.createLogger({
         new winston.transports.Console({ level: 'debug' }),
     ]
 });
-
 
 // ProductLogger
 const prodLogger = winston.createLogger({
@@ -38,28 +36,11 @@ const prodLogger = winston.createLogger({
 
 // Este middleware inyecta el logger en el objeto req habilitado a nivel global en app.js
 const addLogger = (req, res, next) => {
-    // req.logger = devLogger;
     req.logger = devLogger;
     req.logger.debug(`${new Date().toDateString()} ${req.method} en ${req.url}`)
     next();
 }
-/*
 
-// Middleware para añadir el logger a req
-const addLogger = (req, res, next) => {
-    if (process.env.NODE_ENV === 'development') {
-        req.logger = devLogger;
-        req.logger.debug(`${new Date().toISOString()} ${req.method} ${req.url}`);
-    } else {
-        req.logger = prodLogger;
-        req.logger.info(`${new Date().toISOString()} ${req.method} ${req.url}`);
-    }
-    next();
-};
-
-};
-
-**/
 //export { addLogger };
 export default addLogger;
 //export { devLogger, prodLogger, addLogger };

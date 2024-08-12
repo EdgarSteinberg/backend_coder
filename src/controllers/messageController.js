@@ -25,7 +25,6 @@ class MessagesController {
         try {
             const result = await MessageServiceRepositori.createMessage({
                 user,
-                //correoDelUsuario,
                 message
             });
 

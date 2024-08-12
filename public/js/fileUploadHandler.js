@@ -1,4 +1,3 @@
-console.log('hoa mundo')
 document.getElementById('uploadForm').addEventListener('submit', function (event) {
     const fileInput = document.getElementById('docs');
     const errorMessage = document.getElementById('error-message');

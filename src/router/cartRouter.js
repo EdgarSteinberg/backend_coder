@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { CartController } from '../controllers/cartController.js';
-import addLogger from '../logger.js';
 import passport from 'passport';
+
+import { CartController } from '../controllers/cartController.js';
 import { ProductController } from '../controllers/productController.js';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import addLogger from '../logger.js';
+
 const Manager = new ProductController;
+const carts = new CartController();
+
 const CartRouter = Router();
-const carts = new CartController()
 
 CartRouter.get('/', addLogger, async (req, res, next) => {
     try {
@@ -35,7 +36,6 @@ CartRouter.get('/:cid', addLogger, async (req, res, next) => {
     }
 });
 
-
 CartRouter.post("/", addLogger, async (req, res, next) => {
     try {
         if (process.env.NODE_ENV === 'test') {
@@ -53,43 +53,6 @@ CartRouter.post("/", addLogger, async (req, res, next) => {
     }
 });
 
-// CartRouter.post('/', addLogger, async (req, res, next) => {
-//     try {
-//         const result = await carts.createCart();
-//         res.send({ status: 'succes', payload: result })
-//     } catch (error) {
-//         req.logger.error(`Error al crearr el carrito  ${error.message}`)
-//         next(error)
-//     }
-// })
-
-
-// CartRouter.post("/:cid/products/:pid", addLogger, passport.authenticate('jwt', { session: false }), async (req, res, next) => {
-//     const { cid, pid } = req.params;
-//     const userEmail = req.user.email;
-//     const userRole = req.user.role;
-
-//     // Debug logs
-//     req.logger.debug(`Request to add product with ID: ${pid} to cart with ID: ${cid} by user: ${userEmail} with role: ${userRole}`);
-    
-//     // Verificar el propietario del producto antes de agregarlo al carrito
-//     const product = await Manager.getProductByID(pid);
-
-//     if (userRole === 'premium' && product.owner === userEmail) {
-//         req.logger.warning(`User ${userEmail} cannot add their own product to the cart.`);
-//         return res.status(403).send({status: 'error',message: 'No puedes agregar tu propio producto al carrito'});
-//     }
-//     try {
-//         // const result = await carts.addProductByID(req.params.cid, req.params.pid);
-//         const result = await carts.addProductByID(cid, pid);
-//         res.send({ status: 'success', payload: result });
-//     } catch (error) {
-//         req.logger.error(`Error al añadir producto al carrito con ID: ${req.params.pid} ${error.message}`)
-//         next(error)
-//     }
-
-// })
-
 CartRouter.post("/:cid/products/:pid", addLogger, passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     const { cid, pid } = req.params;
     const userEmail = req.user.email;
@@ -98,12 +61,7 @@ CartRouter.post("/:cid/products/:pid", addLogger, passport.authenticate('jwt', {
     req.logger.debug(`Request to add product with ID: ${pid} to cart with ID: ${cid} by user: ${userEmail} with role: ${userRole}`);
 
     try {
-        // Verificar formato del ID del producto
-        if (!mongoose.Types.ObjectId.isValid(pid)) {
-            throw new CustomError('Invalid product ID format', 400);
-        }
-
-        // Obtener el producto
+    
         const product = await Manager.getProductByID(pid);
 
         if (userRole === 'premium' && product.owner === userEmail) {
@@ -167,10 +125,14 @@ CartRouter.delete("/:cid", addLogger, async (req, res, next) => {
 
 CartRouter.post('/:cid/purchase', addLogger, async (req, res, next) => {
     try {
-        const { cid } = req.params
-        const { purchaser } = req.body
+        const { cid } = req.params;
+        const { purchaser } = req.body;
 
-        const result = await carts.cartPurchase(cid, purchaser)
+        // Crear el ticket
+        const result = await carts.cartPurchase(cid, purchaser);
+
+        // Vaciar el carrito
+        await carts.removeAllProductsFromCart(cid);
 
         let message;
         if (result.failedProducts.length === 0) {
@@ -178,14 +140,14 @@ CartRouter.post('/:cid/purchase', addLogger, async (req, res, next) => {
         } else {
             message = "Algunos productos no tienen suficiente stock y no se pudieron comprar.";
         }
-        //res.send({ status: 'success', message: message,payload: result});
-        //console.log("result", result.ticket._id)
+        
         res.redirect(`/ticket/${result.ticket._id}`);
     } catch (error) {
         req.logger.error(`Error al procesar la compra para el carrito con ID: ${req.params.cid}: ${error.message}`);
-        next(error)
+        next(error);
     }
 });
+
 
 
 export default CartRouter

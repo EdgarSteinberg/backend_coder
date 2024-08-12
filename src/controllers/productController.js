@@ -152,35 +152,6 @@ class ProductController {
         }
     }
 
-    // async deleteProduct(productId) {
-    //     try {
-
-    //         const result = await ProductServiceRespository.productDelete({ _id: productId });
-    //         if (result.deletedCount === 0) {
-    //             logger.warning(`Product with ID: ${productId} not found`);
-    //             CustomError.createError({
-    //                 name: 'InvalidParamError',
-    //                 cause: `Product ID ${productId} not found`,
-    //                 message: `El producto ${productId} no existe`,
-    //                 code: ErrorCodes.INVALID_PARAM
-    //             });
-
-
-    //             logger.info(`Product with ID: ${productId} deleted successfully con email ${userEmail}`);
-    //             return result;
-    //         }
-    //     } catch (error) {
-    //         //console.error(error.message);
-    //         logger.error(`Error deleting product with ID: ${productId}: ${error.message}`);
-    //         CustomError.createError({
-    //             name: 'DatabaseError',
-    //             cause: error.message,
-    //             message: 'Error al eliminar el producto',
-    //             code: ErrorCodes.DATABASE_ERROR
-    //         });
-    //     }
-    // }
-
     async deleteProduct(productId) {
         try {
             // Obtener el producto para verificar el propietario

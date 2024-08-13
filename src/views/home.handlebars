@@ -33,12 +33,13 @@
     <div class="products">
         <h2> {{this.title}}</h2>
         <hr>
-        <p>Precio: ${{this.price}}</p>
+        <br>
         <div class="img1">
             {{#each this.thumbnail}}
             <img class="img1" src="/img/{{this}}" alt="{{../this.description}}">
             {{/each}}
         </div>
+        <p>Precio: ${{this.price}}</p>
         <a href="/products/{{this._id}}" class="detail-link">
             <button class="btnP" type="button" data-userid="{{user._id}}">Ver Detalles</button>
         </a>

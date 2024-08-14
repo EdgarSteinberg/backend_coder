@@ -31,7 +31,9 @@ p {
     margin: 5px;
     flex: 1;
 }
-
+.p{
+    color: #18c521;
+}
 hr {
     width: 100%;
 }
@@ -80,7 +82,7 @@ hr {
 }
 
 .containerData b {
-    color: #333;
+    color: #EAFF6A;
 }
 
 .products {
@@ -301,6 +303,7 @@ input {
     max-width: 400px;
     min-height: 300px;
     flex-grow: 1;
+    background-color: #1C1F30;
 }
 
 .imgFaker {
@@ -338,19 +341,12 @@ input.quantity-input {
 
 .logout-link {
     background: none;
-    /* Quita el fondo por defecto del botón */
     border: none;
-    /* Quita el borde por defecto del botón */
     text-decoration: none;
-    /* Quita el subrayado */
     color: white;
-    /* Establece el color del texto */
     font-family: Arial, sans-serif;
-    /* Tamaño del texto */
     cursor: pointer;
-    /* Cambia el cursor al pasar sobre el botón */
     padding: 0;
-    /* Quita el padding por defecto del botón */
 }
 
 .logout-link:hover {
@@ -361,39 +357,25 @@ input.quantity-input {
 
 .successCart {
     background-color: #28a745;
-    /* Color de fondo verde */
     color: white;
-    /* Color del texto */
     border: none;
-    /* Sin borde */
     padding: 10px 20px;
-    /* Espaciado interno */
     text-align: center;
-    /* Centra el texto */
     text-decoration: none;
-    /* Sin subrayado */
     display: inline-flex;
-    /* Ajusta el tamaño del botón y permite alinear elementos */
     align-items: center;
-    /* Alinea verticalmente el ícono y el texto */
     font-size: 16px;
-    /* Tamaño de la fuente del botón */
     border-radius: 5px;
-    /* Bordes redondeados */
     cursor: pointer;
-    /* Cambia el cursor al pasar sobre el botón */
 }
 
 .successCart i {
     margin-right: 8px;
-    /* Espaciado entre el ícono y el texto */
 }
 
 .successCart:hover {
     background-color: #218838;
-    /* Color de fondo en hover */
 }
-
 
 .btnP {
     background-color: #EAFF6A;
@@ -414,31 +396,24 @@ input.quantity-input {
 
 .nexContainer {
     display: flex;
-    /* Usa flex para alinear el contenido */
     justify-content: flex-end
-        /* Alinea el contenido al final del contenedor */
 }
 
 .nexContainerUno {
     display: flex;
-    /* Usa flex para alinear el contenido */
     justify-content: flex-start
-        /* Alinea el contenido al final del contenedor */
 }
 
 .next {
     display: inline-flex;
-    /* Ajusta el tamaño del botón al contenido */
     cursor: pointer;
     font-size: 30px;
     transition: transform 0.3s ease;
-    /* Suaviza la transición de escala */
     margin: 0 15px 15px 0;
 }
 
 .next:hover {
     transform: scale(1.1);
-    /* Aumenta el tamaño del botón al pasar el cursor */
 }
 
 
@@ -493,16 +468,22 @@ input.quantity-input {
 
 .buttonad {
     border: none;
-    padding: 10px 20px;
+    padding: 5px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 7px;
     border: 1px solid white;
 }
-
+@media screen and (max-width: 800px) {
+   
+    .textareaChat{
+        width: 600px;
+    }
+    
+}
 @media screen and (max-width: 400px) {
     .logout-link {
-        display: inline-block; /* Asegura que el enlace se comporte como un bloque en línea */
+        display: inline-block; 
         background-color: white; 
         border: 1px solid black;
         border-radius: 5px; 
@@ -514,7 +495,15 @@ input.quantity-input {
     }
 
     .logout-link:hover {
-        background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
-        border-color: #333; /* Color del borde al pasar el ratón */
+        background-color: #f0f0f0; 
+        border-color: #333; 
+    }
+
+    .textareaChat{
+        width: 300px;
+       
+    }
+    .inputChat{
+        width: 93%;
     }
 }

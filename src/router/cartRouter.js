@@ -13,10 +13,7 @@ const CartRouter = Router();
 CartRouter.get('/', addLogger, async (req, res, next) => {
     try {
         const result = await carts.getAllCarts();
-        res.send({
-            status: 'success',
-            payload: result
-        })
+        res.send({status: 'success',payload: result});
     } catch (error) {
         req.logger.error(`Error al buscar el carrito ${error.message}`)
         next(error)
@@ -26,10 +23,7 @@ CartRouter.get('/', addLogger, async (req, res, next) => {
 CartRouter.get('/:cid', addLogger, async (req, res, next) => {
     try {
         const result = await carts.getCartById(req.params.cid);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.send({status: 'success',payload: result });
     } catch (error) {
         req.logger.error(`Error al buscar el carrito con ID: ${req.params.cid} ${error.message}`)
         next(error)

@@ -266,51 +266,18 @@ router.get("/uploadDocuments", authenticate, async (req, res) => {
     )
 });
 
-// router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
-//     const users = await Users.getAllUsersNew();
-//     res.render(
-//         'admUsers',
-//         {
-//             title: 'AdministrarUsuarios',
-//             style: 'index.css',
-//             users: users,
-//             user: req.user
-//         }
-//     )
-// });
-router.get("/admUsers", authenticate, authorization("admin"), async (req, res, next) => {
-    try {
-        const users = await Users.getAllUsersNew();
-
-        // Extraer los IDs de los carritos, asegurándote de que sean únicos
-        const cartIds = [...new Set(users.map(user => user.cart).filter(id => id))];
-        console.log('IDs de Carrito:', cartIds);
-
-        // Crear un objeto para almacenar los carritos
-        const cartsMap = {};
-
-        // Obtener todos los carritos uno por uno
-        for (const cartId of cartIds) {
-            const cart = await CartManager.getCartById(cartId);
-            console.log(`Carrito ${cartId}:`, cart);
-            cartsMap[cartId] = cart;
-        }
-        console.log('Carritos Map:', cartsMap);
-
-        // Renderizar la vista con los usuarios y sus carritos
-        res.render('admUsers', {
-            title: 'Administrar Usuarios',
+router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
+    const users = await Users.getAllUsersNew();
+    res.render(
+        'admUsers',
+        {
+            title: 'AdministrarUsuarios',
             style: 'index.css',
             users: users,
-            user: req.user,
-            carts: cartsMap // Pasar los carritos al template
-        });
-    } catch (error) {
-        req.logger.error(`Error al obtener usuarios y carritos: ${error.message}`);
-        next(error);
-    }
+            user: req.user
+        }
+    )
 });
-
 
 router.get('/purcharser', authenticate, async (req, res) => {
     const user = req.user;

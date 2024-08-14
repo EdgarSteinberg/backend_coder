@@ -13,13 +13,13 @@ const userSchema = mongoose.Schema({
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts",
-        default: null // Puedes usar null si no hay carrito asociado al usuario
+        default: null 
     },
     role: {
         type: String,
         require: true,
         enum: ['user', 'admin', 'premium'], // Define los roles posibles
-        default: "user" // Por defecto, todos los usuarios serán "user"
+        default: "user" 
     },
     documents: {
         type: [

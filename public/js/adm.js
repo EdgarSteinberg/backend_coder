@@ -8,11 +8,20 @@ function changeRole(userId, newRole) {
     })
         .then(response => {
             if (response.ok) {
-                alert('Rol actualizado con éxito.');
-                window.location.reload(); 
+                Swal.fire({
+                    title: 'Rol actualizado con éxito.',
+                    icon: 'success',
+                    showConfirmButton: true
+                }).then(() => {
+                    window.location.reload();
+                });
             } else {
                 return response.json().then(data => {
-                    alert(`Error: ${data.error}`);
+                    Swal.fire({
+                        title: `Error: ${data.error}`,
+                        icon: 'info',
+                        showConfirmButton: true
+                    })
                 });
             }
         })
@@ -28,8 +37,13 @@ function deleteUser(userId) {
     })
         .then(res => {
             if (res.ok) {
-                alert('Usuario Eliminado.');
-                window.location.reload();
+                Swal.fire({
+                    title: 'Usuario Eliminado.',
+                    icon: 'success',
+                    showConfirmButton: true
+                }).then(() => {
+                    window.location.reload();
+                });
             } else {
                 return res.json().then(data => {
                     alert(`Error: ${data.error || 'No se pudo eliminar el usuario.'}`);
@@ -46,18 +60,29 @@ function deleteUsers() {
     fetch('/api/users', {
         method: 'DELETE'
     })
-        .then(res => res.json()) 
+        .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {
                 if (data.message === 'No hay usuarios inactivos') {
-                    alert('No hay usuarios inactivos para eliminar.');
+                    //alert('No hay usuarios inactivos para eliminar.');
+                    Swal.fire({
+                        title: 'No hay usuarios inactivos para eliminar.',
+                        icon: 'info',
+                        showConfirmButton: true
+                    }).then(() => {
+                        window.location.reload()
+                    })
                 } else {
-                    alert('Usuarios Eliminados.');
+                    Swal.fire({
+                        title: 'Usuarios Eliminados con exito.',
+                        icon: 'success',
+                        showConfirmButton: true
+                    })
                 }
             } else {
                 alert(`Error: ${data.message || 'Error al eliminar los usuarios'}`);
             }
-            window.location.reload(); // Recargar la página para reflejar los cambios
+            //window.location.reload(); // Recargar la página para reflejar los cambios
         })
         .catch(error => {
             console.error('Error al eliminar los usuarios:', error);

@@ -40,7 +40,7 @@ Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false
             req.body.thumbnail = req.files.map(file => file.filename); // Almacena los nombres de los archivos en el array
             console.log('Thumbnail array:', req.body.thumbnail); // Verifica el array de thumbnail
         } else {
-            req.body.thumbnail = []; // Asegúrate de que thumbnail esté siempre inicializado como un array
+            req.body.thumbnail = ''; // Asegúrate de que thumbnail esté siempre inicializado como un array
         }
 
         const userEmail = req.user.email;

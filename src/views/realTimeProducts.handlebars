@@ -36,7 +36,7 @@
         <input class="inputForm" name="category" id="category" type="text">
 
         <label for="thumbnail">Upload Thumbnail:</label>
-        <input class="inputForm" type="file" name="thumbnail" id="thumbnail">
+        <input class="inputForm" type="file" name="thumbnail" id="thumbnail" multiple>
 
         {{#if premium}}
         <input type="hidden" name="owner" id="owner" value="{{user.email}}">

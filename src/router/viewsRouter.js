@@ -266,6 +266,19 @@ router.get("/uploadDocuments", authenticate, async (req, res) => {
     )
 });
 
+router.get("/uploadDocuments/:uid/documents", authenticate, async (req, res) => {
+    const { uid } = req.params; // Obtener el uid desde los parámetros de la URL
+    res.render(
+        'upload2',
+        {
+            title: 'Send Documents',
+            style: 'index.css',
+            user: req.user,
+            uid: uid // Pasar el uid a la vista si es necesario
+        }
+    );
+});
+
 router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
     const users = await Users.getAllUsersNew();
     res.render(

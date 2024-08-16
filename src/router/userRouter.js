@@ -180,7 +180,7 @@ UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false
         res.redirect('/login')
     } catch (error) {
         console.error('Error en la ruta:', error);
-        res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message });
+        res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message, stack: error.stack });
     }
 
 });

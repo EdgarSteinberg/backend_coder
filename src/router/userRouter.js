@@ -214,7 +214,7 @@ UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false
         // Actualizar los documentos del usuario
         const result = await Users.uploadDocuments(uid, updatedDocuments);
 
-        res.redirect('/login');
+        //res.redirect('/login');
     } catch (error) {
         console.error('Error en la ruta:', error.message);
         console.error('Stack Trace:', error.stack);

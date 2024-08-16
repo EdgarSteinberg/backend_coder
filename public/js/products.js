@@ -31,9 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-               //const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
-                const response = await fetch(`https://backend-coder-va89.onrender.com/api/cart/${cartId}/products/${productId}`,{  
-               method: 'POST',
+                const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },

@@ -15,17 +15,17 @@ Productrouter.get("/", addLogger, async (req, res, next) => {
         const products = await Manager.getAllProducts();
         const user = req.user
 
-        res.send({status: 'success',payload: { products: products, user: user }});
+        res.send({ status: 'success', payload: { products: products, user: user } });
     } catch (error) {
         req.logger.error(`Error al buscar los productos ${error.message}`)
-        next(error); 
+        next(error);
     }
 });
 
 Productrouter.get('/:pid', addLogger, async (req, res, next) => {
     try {
         const result = await Manager.getProductByID(req.params.pid);
-        res.send({status: 'success',payload: result});
+        res.send({ status: 'success', payload: result });
 
     } catch (error) {
         req.logger.error(`Error al buscar el producto con ID:${req.params.pid} ${error.message}`)
@@ -40,7 +40,7 @@ Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false
             req.body.thumbnail = req.files.map(file => file.filename); // Almacena los nombres de los archivos en el array
             console.log('Thumbnail array:', req.body.thumbnail); // Verifica el array de thumbnail
         } else {
-            req.body.thumbnail = ''; // Asegúrate de que thumbnail esté siempre inicializado como un array
+            req.body.thumbnail = []; // Asegúrate de que thumbnail esté siempre inicializado como un array
         }
 
         const userEmail = req.user.email;
@@ -86,7 +86,7 @@ Productrouter.delete("/:pid", addLogger, passport.authenticate('jwt', { session:
         const userRole = req.user.role;
         // Verificar permisos antes de eliminar el producto
         const product = await Manager.getProductByID(pid);
-        console.log('producto ruta delete',product, 'userRole', userRole)
+        console.log('producto ruta delete', product, 'userRole', userRole)
         if (userRole === 'admin' || (userRole === 'premium' && product.owner === userEmail)) {
             const result = await Manager.deleteProduct(pid);
             res.send({ status: 'success', payload: result });

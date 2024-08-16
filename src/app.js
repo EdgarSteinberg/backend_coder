@@ -36,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //app.use(express.static('public'));
 app.use(express.static(`${__dirname}/../../public`));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //Motores de plantillas Handlebars 
 app.engine("handlebars", handlebars.engine());

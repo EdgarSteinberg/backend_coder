@@ -77,6 +77,8 @@ function deleteUsers() {
                         title: 'Usuarios Eliminados con exito.',
                         icon: 'success',
                         showConfirmButton: true
+                    }).then(() => {
+                        window.location.reload()
                     })
                 }
             } else {

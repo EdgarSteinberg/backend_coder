@@ -255,34 +255,15 @@ router.get("/check-email", async (req, res) => {
     )
 });
 
-// router.get("/uploadDocuments", authenticate, async (req, res) => {
-//     res.render(
-//         'uploadDocuments',
-//         {
-//             title: 'SendDocuments',
-//             style: 'index.css',
-//             user: req.user
-//         }
-//     )
-// });
-router.get('/uploadDocuments/:uid', authenticate, async (req, res) => {
-    const { uid } = req.params;
-
-    try {
-        const user = await Users.getUser(uid);
-        if (!user) {
-            return res.status(404).send('Usuario no encontrado');
-        }
-
-        res.render('uploadDocuments', {
-            title: 'Upload Documents',
+router.get("/uploadDocuments", authenticate, async (req, res) => {
+    res.render(
+        'uploadDocuments',
+        {
+            title: 'SendDocuments',
             style: 'index.css',
-            user: user
-        });
-    } catch (error) {
-        console.error('Error al obtener el usuario:', error);
-        res.status(500).send('Error interno del servidor');
-    }
+            user: req.user
+        }
+    )
 });
 
 

@@ -154,64 +154,37 @@ UserRouter.put('/premium/:uid', passport.authenticate('jwt', { session: false })
     }
 });
 
-// UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), uploader.array('docs', 3), async (req, res) => {
-//     const { uid } = req.params;
-//     const documents = req.files.map(file => ({
-//         name: file.fieldname,
-//         reference: file.filename
-//     }));
-
-//     if (!documents || documents.length === 0) {
-//         return res.status(400).send({ status: 'error', error: 'No documents uploaded' });
-//     }
-
-//     try {
-//         // Obtener el usuario
-//         const user = await Users.getUser(uid)
-//         if (!user) {
-//             return res.status(404).send({ error: 'Usuario no encontrado' });
-//         }
-//         // Combinar documentos existentes con nuevos documentos
-//         const updatedDocuments = [...user.documents, ...documents];
-
-//         // Actualizar los documentos del usuario
-//         const result = await Users.uploadDocuments(uid, updatedDocuments);
-
-//         res.redirect('/login')
-//     } catch (error) {
-//         console.error('Error en la ruta:', error);
-//         res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message, stack: error.stack });
-//     }
-
-// });
-
 UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), uploader.array('docs', 3), async (req, res) => {
     const { uid } = req.params;
+    const documents = req.files.map(file => ({
+        name: file.fieldname,
+        reference: file.filename
+    }));
+
+    if (!documents || documents.length === 0) {
+        return res.status(400).send({ status: 'error', error: 'No documents uploaded' });
+    }
 
     try {
-        if (!req.files || req.files.length === 0) {
-            return res.status(400).send({ status: 'error', error: 'No documents uploaded' });
-        }
-
-        const documents = req.files.map(file => ({
-            name: file.originalname,
-            reference: file.filename
-        }));
-
-        const user = await Users.getUser(uid);
+        // Obtener el usuario
+        const user = await Users.getUser(uid)
         if (!user) {
-            return res.status(404).send({ status: 'error', error: 'Usuario no encontrado' });
+            return res.status(404).send({ error: 'Usuario no encontrado' });
         }
-
+        // Combinar documentos existentes con nuevos documentos
         const updatedDocuments = [...user.documents, ...documents];
-        await Users.uploadDocuments(uid, updatedDocuments);
 
-        res.redirect('/login'); // Redirige a la página de login o a otra página de éxito
+        // Actualizar los documentos del usuario
+        const result = await Users.uploadDocuments(uid, updatedDocuments);
+
+        res.redirect('/login')
     } catch (error) {
         console.error('Error en la ruta:', error);
         res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message, stack: error.stack });
     }
+
 });
+
 
 
 UserRouter.delete('/', passport.authenticate('jwt', { session: false }), authorization(["admin"]), async (req, res) => {

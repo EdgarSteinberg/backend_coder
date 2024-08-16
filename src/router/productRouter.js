@@ -53,7 +53,8 @@ Productrouter.post('/', addLogger, passport.authenticate('jwt', { session: false
         }
 
         const result = await Manager.createProduct(req.body);
-        res.send({ status: 'success', payload: result });
+        //res.send({ status: 'success', payload: result });
+        res.redirect("/realTimeProducts")
     } catch (error) {
         req.logger.error(`Error al crear el producto ${error.message}`);
         next(error);

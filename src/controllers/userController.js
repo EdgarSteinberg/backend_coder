@@ -270,7 +270,7 @@ class userController {
     async deleteInactiveUsers() {
         const TWO_DAYS_AGO = dayjs().subtract(2, 'day').toDate(); // Cambiado a 2 días
         //const THIRTY_MINUTES_AGO = dayjs().subtract(30, 'minute').toDate();
-        console.log('Tiempo de referencia (30 minutos atrás):', TWO_DAYS_AGO);
+        console.log('Tiempo de referencia (2 dias):', TWO_DAYS_AGO);
 
 
         try {

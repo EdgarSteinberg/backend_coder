@@ -15,7 +15,8 @@
 <hr>
 <div>
     <h1>Agregar Nuevo Producto</h1>
-    <form id="formulario" class="form" enctype="multipart/form-data">
+
+    <form id="formulario" class="form" enctype="multipart/form-data" action="/api/products" method="POST">
         <label for="title">Título:</label>
         <input class="inputForm" type="text" name="title" id="title" required>
 
@@ -23,19 +24,19 @@
         <input class="inputForm" type="text" name="description" id="description" required>
 
         <label for="price">Precio:</label>
-        <input class="inputForm" type="text" name="price" id="price" required>
+        <input class="inputForm" type="number" name="price" id="price" required>
 
         <label for="code">Código:</label>
         <input class="inputForm" type="text" name="code" id="code" required>
 
         <label for="stock">Stock:</label>
-        <input class="inputForm" type="text" name="stock" id="stock" required>
+        <input class="inputForm" type="number" name="stock" id="stock" required>
 
         <label for="category">Categoria:</label>
         <input class="inputForm" name="category" id="category" type="text">
 
         <label for="thumbnail">Upload Thumbnail:</label>
-        <input class="inputForm" type="file" name="thumbnail" id="thumbnail" multiple>
+        <input class="inputForm" type="file" name="thumbnail" id="thumbnail">
 
         {{#if premium}}
         <input type="hidden" name="owner" id="owner" value="{{user.email}}">
@@ -45,16 +46,16 @@
     </form>
 
     <hr>
-    <h1>Listado de Productos en Tiempo Real</h1>
+    <h1>Listado de Productos</h1>
     <div class="container" id="listaProductos">
         {{#each products}}
-        <div  class="productsFaker">
+        <div class="productsFaker">
             <h2 class="linea">{{this.title}}</h2>
             <p>Descripción: {{this.description}}</p>
-            <p>Precio: $ {{this.price}}</p>
+            <p class="p">Precio: $ {{this.price}}</p>
             <p>Código: {{this.code}}</p>
             <p>category: {{this.category}}</p>
-            <img src="{{this.thumbnail}}" alt="{{this.description}}">
+            <img class="img1" src="/img/{{this.thumbnail}}" alt="{{this.description}}">
             <!-- Input oculto para el correo electrónico del usuario -->
             <input type="hidden" name="userEmail" id="user-email" value="{{this.owner}}">
             <br>

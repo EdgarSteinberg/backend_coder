@@ -18,9 +18,9 @@ export default (io) => {
             console.log("Producto enviado al cliente: ", dataWithID);
 
             socket.emit("productoAgregado", dataWithID);
-            
+ 
         });
-
+        
         socket.on("eliminarProducto", async productId => {
             try {
                 console.log("Recibida solicitud para eliminar el producto del servidor con ID:", productId);
@@ -28,6 +28,7 @@ export default (io) => {
                 await Manager.deleteProduct(productId);
 
                 socket.emit("productoEliminado", productId);
+               
             } catch (error) {
                 console.error("Error al eliminar el producto:", error.message);
                 // Aquí puedes decidir cómo manejar el error, por ejemplo, enviar un mensaje de error al cliente

@@ -110,7 +110,7 @@ router.get("/realTimeProducts", passport.authenticate('jwt', { session: false })
 
     try {
         let allProduct = await Manager.getAllProducts(queryParams);
-        console.log('User info in realTimeProducts route:', req.user); // Agrega este console.log para verificar el req.user
+        //console.log('User info in realTimeProducts route:', req.user); // Agrega este console.log para verificar el req.user
         res.render(
             "realTimeProducts",
             {

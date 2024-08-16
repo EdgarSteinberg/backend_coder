@@ -35,9 +35,11 @@
         <hr>
         <br>
         <div class="img1">
-            {{#each this.thumbnail}}
+            {{!-- {{#each this.thumbnail}}
             <img class="img1" src="/img/{{this}}" alt="{{../this.description}}">
-            {{/each}}
+            {{/each}} --}}
+            <img class="img1" src="/img/{{this.thumbnail}}" alt="{{../this.description}}">
+
         </div>
         <p class="p">Precio: ${{this.price}}</p>
         <a href="/products/{{this._id}}" class="detail-link">

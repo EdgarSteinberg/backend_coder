@@ -92,9 +92,8 @@ app.use('/mockingproducts', fakerRouter);
 app.use('/reset-password', userRouter)
 app.use('/realTimeProducts', productRouter)
 app.use('/ticket/:tid', ticketRouter)
-
 app.use('/admUsers', userRouter)
-app.use('/uploadDocuments', userRouter)
+
 //Websocket||PORT8080
 const PORT = 8080;
 const httpServer = app.listen(PORT, () => {

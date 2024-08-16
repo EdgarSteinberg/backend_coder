@@ -16,7 +16,7 @@
     <br>
     <br>
     <h1>Upload Documents</h1>
-    {{!-- <form class="box" id="uploadForm" action="/api/users/{{user._id}}/documents" method="post"
+    <form class="box" id="uploadForm" action="/api/users/{{user._id}}/documents" method="post"
         enctype="multipart/form-data">
         <label for="docs">Subir Documentos:</label>
         <input type="file" name="docs" id="docs" multiple />
@@ -33,28 +33,6 @@
         Después de subir los documentos, por favor, vuelve a iniciar sesión para completar el proceso.
         </p>
         <button class="btnP" type="submit">Subir</button>
-    </form> --}}
-    <h1>Upload Documents</h1>
-    <form class="box" id="uploadForm" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="userId" value="{{user._id}}" />
-        <label for="docs">Subir Documentos:</label>
-        <input type="file" name="docs" id="docs" multiple />
-        <br>
-        <span id="error-message" class="error-message">Debes subir al menos 3 archivos.</span>
-        <br>
-        <p id="info-message" class="info-message">
-            Para actualizar a premium, necesitas subir los siguientes documentos:
-        <ul>
-            <li>Identificación</li>
-            <li>Prueba de Domicilio</li>
-            <li>Comprobante de Estado de Cuenta Bancario</li>
-        </ul>
-        Después de subir los documentos, por favor, vuelve a iniciar sesión para completar el proceso.
-        </p>
-        <button class="btnP" type="submit">Subir</button>
     </form>
-
-    <script src="/js/fileUploadHandler.js"></script>
-
 
     <script src="/js/fileUploadHandler.js"></script>

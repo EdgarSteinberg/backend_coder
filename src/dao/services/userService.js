@@ -76,7 +76,7 @@ class UserService {
             const result = await userModel.updateOne(
                 { email },
                 { $set: { last_connection: new Date() } }
-            ).lean();
+            ); // aca va el .lean()
             console.log('DAO update result:', result);
             return result;
         } catch (error) {

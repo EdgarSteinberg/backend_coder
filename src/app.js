@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
+import path from 'path';
 
 import __dirname from "./utils/constantsUtil.js"
 import websocket from './websocket.js'

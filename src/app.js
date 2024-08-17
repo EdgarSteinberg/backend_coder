@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
+import cors from 'cors'; // Importa el paquete CORS
 
 import __dirname from "./utils/constantsUtil.js"
 import websocket from './websocket.js'
@@ -27,6 +28,13 @@ import gitHub from './router/gitHub.js'
 dotenv.config();
 //Express
 const app = express();
+
+// Configuración de CORS
+app.use(cors({
+    origin: 'https://backend-coder-n9w1.onrender.com', // Reemplaza con el dominio de tu frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 //Coneccion a MongoDB
 mongoose.connect(process.env.MONGODB_URI);

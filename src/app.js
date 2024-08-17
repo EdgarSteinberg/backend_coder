@@ -95,10 +95,19 @@ app.use('/ticket/:tid', ticketRouter)
 app.use('/admUsers', userRouter)
 
 //Websocket||PORT8080
-const PORT = 8080;
+// const PORT = 8080;
+// const httpServer = app.listen(PORT, () => {
+//     console.log(`Servidor activo en http://localhost:${PORT}`);
+// })
+
+// const io = new Server(httpServer);
+
+// websocket(io);
+
+const PORT = process.env.PORT || 8080; // Usa el puerto de la variable de entorno o 8080 por defecto
 const httpServer = app.listen(PORT, () => {
     console.log(`Servidor activo en http://localhost:${PORT}`);
-})
+});
 
 const io = new Server(httpServer);
 

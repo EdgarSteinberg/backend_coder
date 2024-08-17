@@ -255,7 +255,18 @@ router.get("/check-email", async (req, res) => {
     )
 });
 
-router.get("/uploadDocuments", authenticate, async (req, res) => {
+// router.get("/uploadDocuments", authenticate, async (req, res) => {
+//     res.render(
+//         'uploadDocuments',
+//         {
+//             title: 'SendDocuments',
+//             style: 'index.css',
+//             user: req.user
+//         }
+//     )
+// });
+
+router.get("/uploadDocuments/:uid/documents", authenticate, async (req, res) => {
     res.render(
         'uploadDocuments',
         {
@@ -265,7 +276,6 @@ router.get("/uploadDocuments", authenticate, async (req, res) => {
         }
     )
 });
-
 
 router.get("/admUsers", authenticate, authorization("admin"), async (req, res) => {
     const users = await Users.getAllUsersNew();

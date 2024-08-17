@@ -154,7 +154,7 @@ UserRouter.put('/premium/:uid', passport.authenticate('jwt', { session: false })
     }
 });
 
-UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), uploader.array('docs', 3), async (req, res,next) => {
+UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false }), uploader.array('docs', 3), async (req, res) => {
     const { uid } = req.params;
     const documents = req.files.map(file => ({
         name: file.fieldname,
@@ -180,10 +180,7 @@ UserRouter.post('/:uid/documents', passport.authenticate('jwt', { session: false
         res.redirect('/login')
     } catch (error) {
         console.error('Error en la ruta:', error);
-        //res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message, stack: error.stack });
-        req.logger.error(`Error al subir documentos para el usuario con ID: ${uid}: ${error.message}`);
-        next(error)
-   
+        res.status(500).send({ status: 'error', error: 'Unhandled error', details: error.message, stack: error.stack });
     }
 
 });

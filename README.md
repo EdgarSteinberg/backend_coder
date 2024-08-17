@@ -34,7 +34,7 @@ npm start
 Esto iniciará la aplicación utilizando nodemon para monitorear cambios en el código y reiniciar automáticamente el servidor.
 
 📖 Documentación de API
-La API está documentada utilizando Swagger. Puedes acceder a la documentación en http://localhost:3000/api-docs después de iniciar la aplicación.
+La API está documentada utilizando Swagger. Puedes acceder a la documentación en http://localhost:8080/api-docs después de iniciar la aplicación.
 
 🧪 Pruebas
 El proyecto incluye un conjunto de pruebas de integración con Mocha y Chai.

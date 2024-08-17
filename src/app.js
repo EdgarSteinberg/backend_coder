@@ -36,6 +36,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //app.use(express.static('public'));
 app.use(express.static(`${__dirname}/../../public`));
+app.use('/images', express.static(`${__dirname}/../../public/img`));
+app.use('/documents', express.static(`${__dirname}/../../public/documents`));
+app.use('/profiles', express.static(`${__dirname}/../../public/profile`));
 
 //Motores de plantillas Handlebars 
 app.engine("handlebars", handlebars.engine());

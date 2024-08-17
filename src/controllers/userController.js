@@ -257,15 +257,32 @@ class userController {
         }
     }
 
+    // async uploadDocuments(uid, documents) {
+    //     try {
+    //         const result = await UserServiceRespository.uploadDocuments(uid, documents);
+    //         return result;
+    //     } catch (error) {
+    //         console.error('Error uploading documents:', error);
+    //         throw new Error('Error uploading documents');
+    //     }
+    // }
+    
     async uploadDocuments(uid, documents) {
         try {
             const result = await UserServiceRespository.uploadDocuments(uid, documents);
             return result;
         } catch (error) {
-            console.error('Error uploading documents:', error);
+            logger.error(`Error uploading documents for user with ID: ${uid}: ${error.message}`);
+            CustomError.createError({
+                name: 'DatabaseError',
+                cause: error.message,
+                message: 'Error al subir los documentos',
+                code: ErrorCodes.DATABASE_ERROR
+            });
             throw new Error('Error uploading documents');
         }
     }
+    
 
     async deleteInactiveUsers() {
         const TWO_DAYS_AGO = dayjs().subtract(2, 'day').toDate(); // Cambiado a 2 días

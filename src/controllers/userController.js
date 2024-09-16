@@ -220,7 +220,7 @@ class userController {
                      <h1>Solicitud de Recuperación de Contraseña</h1>
                      <p>Hemos recibido una solicitud para restablecer tu contraseña. Si no realizaste esta solicitud, por favor ignora este correo.</p>
                      <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-                     <a href="https://backend-coder-va89.onrender.com/reset-password?token=${token}">
+                     <a href="https://backend-coder-n9w1.onrender.com/reset-password?token=${token}">
                      <button class="btnChat">Restablecer Contraseña</button>
                      </a>
                      <p>Este enlace es válido por 1 hora.</p>

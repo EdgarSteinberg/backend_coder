@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv';
 import dayjs from 'dayjs';
+import { Resend } from "resend";
 
 import { UserServiceRespository } from '../repositories/index.js';
 import { isValidPassword, createHash } from "../utils/cryptoUtil.js";
@@ -13,8 +14,10 @@ import { devLogger as logger } from '../logger.js';
 import { CartController } from './cartController.js';
 
 dotenv.config();
+
 const CartManager = new CartController();
 const SECRET_KEY = process.env.SECRET_KEY;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 class userController {
 
@@ -78,7 +81,7 @@ class userController {
                 password: hashedPassword,
                 username,
                 role,
-        
+
             });
 
             // Asignar el carrito al usuario
@@ -193,40 +196,86 @@ class userController {
         }
     }
     // NODEMAILER 
-    async requestPasswordReset(email) {
-        const transport = nodemailer.createTransport({
-            service: 'gmail',
-            port: 587,
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
+    /*     async requestPasswordReset(email) {
+            const transport = nodemailer.createTransport({
+                service: 'gmail',
+                port: 587,
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS
+                }
+            });
+    
+            const user = await UserServiceRespository.getEmail(email);
+            if (!user) {
+                throw new Error('Correo electrónico no encontrado');
             }
-        });
+    
+            const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+            console.log(`Este el token desde el email`, token)
+    
+            // Enviar correo con el enlace de restablecimiento de contraseña
+            await transport.sendMail({
+                from: 'Edgar Steinberg <s.steinberg2019@gmail.com>',
+                to: email,
+                subject: 'Recuperación de Contraseña',
+                html: `<div style="font-family: Arial, sans-serif; color: #333;">
+                         <h1>Solicitud de Recuperación de Contraseña</h1>
+                         <p>Hemos recibido una solicitud para restablecer tu contraseña. Si no realizaste esta solicitud, por favor ignora este correo.</p>
+                         <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
+                         <a href="https://backend-coder-n9w1.onrender.com/reset-password?token=${token}">
+                         <button class="btnChat">Restablecer Contraseña</button>
+                         </a>
+                         <p>Este enlace es válido por 1 hora.</p>
+                         <p>Gracias,</p>
+                         <p>El equipo de soporte de AppCoder</p>
+                       </div>`,
+            });
+    
+            return token;
+        } */
 
+    // RESEND
+    async requestPasswordReset(email) {
         const user = await UserServiceRespository.getEmail(email);
         if (!user) {
             throw new Error('Correo electrónico no encontrado');
         }
 
         const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-        console.log(`Este el token desde el email`, token)
+        console.log(`Este el token desde el email`, token);
 
-        // Enviar correo con el enlace de restablecimiento de contraseña
-        await transport.sendMail({
-            from: 'Edgar Steinberg <s.steinberg2019@gmail.com>',
+        await resend.emails.send({
+            from: 'Edgar Steinberg <onboarding@resend.dev>', // cambiar al verificar dominio
             to: email,
             subject: 'Recuperación de Contraseña',
-            html: `<div style="font-family: Arial, sans-serif; color: #333;">
-                     <h1>Solicitud de Recuperación de Contraseña</h1>
-                     <p>Hemos recibido una solicitud para restablecer tu contraseña. Si no realizaste esta solicitud, por favor ignora este correo.</p>
-                     <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-                     <a href="https://backend-coder-n9w1.onrender.com/reset-password?token=${token}">
-                     <button class="btnChat">Restablecer Contraseña</button>
-                     </a>
-                     <p>Este enlace es válido por 1 hora.</p>
-                     <p>Gracias,</p>
-                     <p>El equipo de soporte de AppCoder</p>
-                   </div>`,
+            html: `
+            <div style="font-family: Arial, sans-serif; color: #333;">
+                <h1>Solicitud de Recuperación de Contraseña</h1>
+                <p>
+                    Hemos recibido una solicitud para restablecer tu contraseña.
+                    Si no realizaste esta solicitud, por favor ignora este correo.
+                </p>
+                <p>
+                    Para restablecer tu contraseña, haz clic en el siguiente enlace:
+                </p>
+                <a href="https://backend-coder-n9w1.onrender.com/reset-password?token=${token}"
+                   style="display:inline-block; margin:12px 0;">
+                    <button style="
+                        padding:10px 16px;
+                        background:#000;
+                        color:#fff;
+                        border:none;
+                        border-radius:6px;
+                        cursor:pointer;
+                    ">
+                        Restablecer Contraseña
+                    </button>
+                </a>
+                <p>Este enlace es válido por 1 hora.</p>
+                <p>Gracias,<br/>El equipo de soporte de AppCoder</p>
+            </div>
+            `,
         });
 
         return token;
